@@ -1,0 +1,21 @@
+body, html, pre {
+    background-color: #eee;
+    font-family: "Source Code Pro";
+    font-weight: 300;
+    letter-spacing: -0.6pt;
+    line-height: 1.4em;
+}
+
+span.SpecialKey {
+    background-color: white;
+    /* background-color: inherit; */
+    color: black;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+span.Todo {
+    font-weight: 400;
+    color: brown;
+    background-color: white;
+}

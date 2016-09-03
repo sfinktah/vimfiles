@@ -1,0 +1,53 @@
+#{{{1 YAML document start
+%YAML 1.2
+--- &a
+#{{{1 Dictionary
+- abc: def
+  ghi: jkl
+  #{{{2 Nested dictionary
+  mno:
+    #{{{3 Nested dictionary 2
+    vwx:
+      yz: ABC
+      #{{{4 Nested dictionary 3 	 
+      DEF:
+        #{{{5 Nested dictionary 4   
+        GHI:
+          #{{{6 Nested dictionary 5
+          JKL:
+            #{{{7 Nested dictionary 6
+            MNO:
+              #{{{8 Nested dictionary 7
+              PQR:
+                #{{{9 Nested dictionary 8
+                STU:
+                  #{{{10 Nested dictionary 9
+                  VWX:
+                    #{{{11 Nested dictionary 10
+                    YZ: *a
+#{{{1 List
+- - foo
+  - bar
+#{{{1 Block scalar
+- |
+  abc
+  def
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+# Flow scalar
+#{{{1 Flow scalar
+- "abc
+   def"
+#{{{1 Document end
+
+# vim: ft=yaml:fdm=marker:tw=80

@@ -1,0 +1,8 @@
+snippet getter "get/set" 
+private static $2 _$1 = "";
+public static ${2:Type} ${1:PropertyName}
+{
+	get { return _$1; }
+	set { _$1 = value; }
+}
+endsnippet

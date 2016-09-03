@@ -1,0 +1,17 @@
+:let g:formatOptions={'AllFolds': 1, 'IgnoreTags': 2, 'IgnoreFolds': 1, 'CollapsFiller': 1, 'IgnoreCursor': 0, 'FormatConcealed': 2, 'ShowProgress': 0}
+:let &list=1
+:let &cole=2
+:let &number=1
+:let &relativenumber=0
+:let &listchars='eol:$,tab:>-,trail:-'
+:view concealed.tex
+:set filetype=tex
+:runtime syntax/tex.vim
+:diffthis
+:vsplit concealed-2.tex
+:set filetype=tex
+:runtime syntax/tex.vim
+:diffthis
+:wincmd w
+:normal! zR
+:execute "Format diffformat html to ".escape(g:outfile, " ")

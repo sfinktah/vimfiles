@@ -1,0 +1,1109 @@
+Auto Assembler Commands
+===
+
+Command	description
+{
+    "ALLOC": {
+        "camelCase": "alloc",
+        "description": "ALLOC(allocName, sizeInBytes): Allocates a certain amount of memory and registers the specified name."
+    },
+    "AOBSCAN": {
+        "camelCase": "aobScan",
+        "description": "AOBSCAN(name, xx xx xx xx xx): Scans the memory for the given array of byte and sets the result to the symbol named \"name\""
+    },
+    "AOBSCANMODULE": {
+        "camelCase": "aobScanModule",
+        "description": "AOBSCANMODULE(name, moduleName, xx xx xx xx xx): Scans the memory of a specific module for the given array of byte and sets the result to the symbol names \"name\""
+    },
+    "CREATETHREAD": {
+        "camelCase": "createThread",
+        "description": "CREATETHREAD(address): Will spawn a thread in the process at the specified address"
+    },
+    "DEALLOC": {
+        "camelCase": "dealloc",
+        "description": "DEALLOC(allocName): Deallocates a block of memory allocated with Alloc. It always gets executed last, no matter where it is positioned in the code, and only actually frees the memory when all allocations have been freed. Only usable in a script designed as a cheat table. (e.g used for the disable cheat)"
+    },
+    "DEFINE": {
+        "camelCase": "define",
+        "description": "DEFINE(name,whatever): Creates a token with the specified name that will be replaced with the text of whatever"
+    },
+    "FULLACCESS": {
+        "camelCase": "fullAccess",
+        "description": "FULLACCESS(address,size): Makes a memory region at the specified address and at least \"size\" bytes readable, writable and executable"
+    },
+    "GLOBALALLOC": {
+        "camelCase": "globalAlloc",
+        "description": "GLOBALALLOC(name,size): Allocates a certain amount of memory and registers the specified name. Using GlobalAlloc in other scripts will then not allocate the memory again, but reuse the already existing memory. (Or allocate it anyhow if found it wasn't allocated yet)"
+    },
+    "INCLUDE": {
+        "camelCase": "include",
+        "description": "INCLUDE(filename): Includes another auto assembler file at that spot"
+    },
+    "LABEL": {
+        "camelCase": "label",
+        "description": "LABEL(labelName): Enables the word labelName to be used as an address"
+    },
+    "LOADBINARY": {
+        "camelCase": "loadBinary",
+        "description": "LOADBINARY(address,filename): Loads a binary file at the specified address"
+    },
+    "LOADLIBRARY": {
+        "camelCase": "loadLibrary",
+        "description": "LOADLIBRARY(filename): Injects the specified DLL into the target process"
+    },
+    "READMEM": {
+        "camelCase": "readMem",
+        "description": "READMEM(address,size): Writes the memory at the specified address with the specified size to the current location"
+    },
+    "REGISTERSYMBOL": {
+        "camelCase": "registerSymbol",
+        "description": "REGISTERSYMBOL(symbolName): Adds a symbol to the user-defined symbol list so cheat tables and the memory browser can use that name instead of a address (The symbol has to be declared in the script when using it)"
+    },
+    "UNREGISTERSYMBOL": {
+        "camelCase": "unregisterSymbol",
+        "description": "UNREGISTERSYMBOL(symbolName): Removes a symbol from the user-defined symbol list. No error will occur if the symbol doesn't exist."
+    }
+}
+
+
+Lua Functions
+===
+
+getAddressList: Returns the cheat table addresslist object
+
+findTableFile: Returns a TableFile stored in the cheat table
+
+AOBScan: Scans the currently opened process and returns a StringList object containing all the results
+
+getCurrentMemscan: Returns the currently active scan session as a MemScan object
+
+openProcess: Causes cheat engine to open the given processname or id
+
+onOpenProcess: Called by CE when it opens a process (userdefined)
+
+getForegroundProcess: Returns the processid of the current foreground window
+
+getOpenedProcessID: Returns the currently opened process
+
+getProcessIDFromProcessName: Returns a processid
+
+pause: Pauses the current opened process
+
+unpause: Resumes the current opened process
+
+targetIs64Bit: Returns true if the target process is 64-bit, false if 32-bit
+
+speedhack_setSpeed: Enables the speedhack if it was not active yet and sets the given speed
+
+getAddress: Returns the address of a symbol. Can be a modulename or an export
+
+getNameFromAddress: Returns the given address in string form, returning the symbol representation if possible
+
+registerSymbol: Assign the specified symbolname to an address
+
+unregisterSymbol: Remove the name from the address
+
+reinitializeSymbolhandler: Reinitializes the symbolhandler. E.g when new modules have been loaded
+
+inModule: Returns true if the given address is inside a module
+
+inSystemModule: Returns true if the given address is inside a system module
+
+errorOnLookupFailure: Set whether address lookups will throw errors, or just return 0.
+
+readBytes: Returns the bytes at the given address. If ReturnAsTable is true it will return a table instead of multiple bytes
+
+readInteger: Reads a integer from the specified address
+
+readFloat: Reads a single precision floating point value from the specified address
+
+readDouble: Reads a double precision floating point value from the specified address
+
+readString: Reads a string from memory until it hits a 0-terminator. maxlength is just so you won't freeze for too long
+
+readRegionFromFile: Writes the given file to a specific address
+
+writeBytes: Write the given bytes to the given address from a table
+
+writeInteger: Writes an integer to the specified address
+
+writeFloat: Writes a single precision floating point to the specified address
+
+writeDouble: Writes a double precision floating point to the specified address
+
+writeString: Write a string to the specified address
+
+writeRegionToFile: Writes the given region to a file. Returns the number of bytes written
+
+getMousePos: Returns the x,y coordinates of the mouse
+
+setMousePos: Sets the mouse position
+
+isKeyPressed: Returns true if the specified key is currently pressed
+
+keyDown: Causes the key to go into down state
+
+keyUp: Causes the key to go up
+
+doKeyPress: Simulates a key press
+
+unhideMainCEwindow: Shows the main cheat engine window
+
+hideAllCEWindows: Makes all normal ce windows invisible (e.g trainer table)
+
+supportCheatEngine: Will show an advertising window which will help keep the development of Cheat Engine going.
+
+fuckCheatEngine: Removes the ad window if it was showing
+
+getCheatEngineDir: Returns the folder Cheat Engine (or the trainer) is located at.
+
+readBytesLocal: readBytes, but for Cheat Engine's own memory
+
+writeBytesLocal: writeBytes, but for Cheat Engine's own memory
+
+cheatEngineIs64Bit: Returns true if CE is 64-bit, false if 32-bit
+
+closeCE: Closes ce
+
+showMessage: Shows a messagebox with the given text
+
+messageDialog: Pops up a messagebox
+
+playSound: Plays a sound file
+
+beep: Plays the fabulous beep/ping sound!
+
+xmplayer_playXM: Plays the given filename using the xmplayer
+
+xmplayer_pause: Pauses the current xm audio file
+
+xmplayer_resume: Resumes the current xm audio file
+
+xmplayer_stop: Stops the current xm audio file
+
+xmplayer_isPlaying: Returns true if there is currenty an xm audio file being played
+
+resetLuaState: This will create a new Lua state that will be used.
+
+sleep: Pauses for the number of specified milliseconds
+
+onAutoGuess: Registers an function to be called whenever autoguess is used to predict a variable type.
+
+registerCustomTypeLua: Registers a custom type based on Lua functions.
+
+registerCustomTypeAutoAssembler: Registers a custom type based on an auto assembler script.
+
+inheritsFromObject: Returns true if given any class
+
+inheritsFromComponent: Returns true if the given object inherits from the Component class
+
+inheritsFromControl: Returns true if the given object inherits from the Control class
+
+inheritsFromWinControl: Returns true if the given object inherits from the WinControl class
+
+autoAssemble: Runs the auto assembler with the given text
+
+disassemble: Disassembles the given address and returns a string in the format of "address - bytes - opcode  extra"
+
+splitDisassembledString: Returns 4 strings. The address, bytes, opcode and extra field
+
+getInstructionSize: Returns the size of an instruction
+
+getPreviousOpcode: Returns the address of the previous opcode (guess)
+
+debugProcess: Debugs the currently attached process
+
+debug_setBreakpoint: Sets a breakpoint of a specific size at the given address
+
+debugger_onBreakpoint: Called by CE when a breakpoint hits (userdefined)
+
+debug_removeBreakpoint: Removes a breakpoint
+
+debug_continueFromBreakpoint: Continues the debugger when it's halted on a breakpoint
+
+debug_setLastBranchRecording: Tells the kernelmode debugger to record the last few branches before the breakpoint got hit
+
+debug_getMaxLastBranchRecord: Returns the maximum number of branch records this cpu supports
+
+debug_getLastBranchRecord: Returns the value of the Last Branch Record at the given index (when handling a breakpoint)
+
+debugger_onModuleLoad: Called by CE when the windows debugger interface loads a module (userdefined)
+
+getAutoAttachList: Returns the AutoAttach StringList object
+
+debug_getContext (since 6.5): Force-update the Lua variables representing the registers?
+
+debug_setContext (since 6.5[1]): Force-update the registers to the Lua variables which represent them?
+
+dbk_initialize: Loads the DBK driver into memory if possible
+
+dbk_useKernelmodeOpenProcess: Switches the internal pointer of the OpenProcess api to dbk_OpenProcess
+
+dbk_useKernelmodeProcessMemoryAccess: Switches the internal pointer to the ReadProcessMemory and WriteProcessMemory apis to dbk_ReadProcessMemory and dbk_WriteProcessMemory
+
+dbk_useKernelmodeQueryMemoryRegions: Switches the internal pointer to the QueryVirtualMemory api to dbk_QueryVirtualMemory
+
+dbk_getPEProcess: Returns the pointer of the EProcess structure of the selected processid
+
+dbk_getPEThread: Gets the pointer to the EThread structure of a threadid
+
+dbk_readMSR: Reads the msr using the dbk driver
+
+dbk_writeMSR: Writes the msr using the dbk driver
+
+dbk_executeKernelMemory: Executes a routine from kernelmode (e.g a routine written there with auto assembler)
+
+dbvm_initialize: Initializes the dbvm functions
+
+dbvm_readMSR: Reads the msr using dbvm (bypasses the driver)
+
+dbvm_writeMSR: Writes the msr using dbvm (bypasses the driver)
+
+getPixel: Returns the rgb value of the pixel at the specific screen coordinate
+
+injectDll: Injects a dll
+
+allocateSharedMemory: Creates/reuses a shared memory object.
+
+createProcess: Creates a process with or without debugging
+
+shellExecute: Executes a given command
+
+generateAPIHookScript: Generates an auto assembler script which will hook the given address when executed
+
+onAPIPointerChange: Registers a callback when an api pointer is changed
+
+setAPIPointer: Sets the pointer of the given api to the given address
+
+getFormCount: Returns the total number of forms assigned to the main CE application
+
+getForm: Returns the form at the specific index
+
+getMemoryViewForm: Returns the first Memoryview form class object
+
+getMainForm: Returns the first Mainform class object
+
+getFreezeTimer: Returns the Timer object responsible for freezing values
+
+getUpdateTimer: Returns the Timer object responsible for updating the value list
+
+getCommonModuleList: Returns the commonModuleList StringList object
+
+Addresslist: The addresslist class is a container for memory records
+
+Brush: The brush class is part of the Canvas object. It's used to fill surfaces
+
+Button: The button class is a visual component in the shape of a button.
+
+ButtonControl: Common ancestor of several button like objects.
+
+Canvas: The canvas class is a graphical class. It allows you do draw lines, pictures, and text on top of other object. Usually used in onPaint events and other graphical events 
+
+CheatComponent: The cheatcomponent class is the component used in Cheat Engine 5.x trainers
+
+CheckBox: The Checkbox is a visual component that lets the user click it and change state between checked, unchecked, and if possible, grayed
+
+Component : Base class for all components that need owner-owned functionality.
+
+Control : Base class for visible controls.
+
+Collection: The Collection class is an abstract class that the ListColumns class implements (And perhaps other classes as well)
+
+CollectionItem:  Basic object that is managed by a Collection class
+
+ComboBox: The Combobox is like an edit field with a ListBox attached to it
+
+CustomControl: Base class for windowed controls which paint themselves
+
+Disassemblerview: The visual disassembler used in the memory view window
+
+Edit: The Edit class is a visual component that lets the user type in data (Use control_getCaption to get the user input)
+
+FileStream: The FileStream class is a Stream class that is linked to an open file on disk
+
+Font: Class that defines a font
+
+Form: Class that defines a window
+
+FoundList: The foundlist is an companion class to MemScan. It opens the current memscan's result file and provides an interface for reading out the addresses
+
+GenericHotkey: Lets you register hotkeys to Cheat Engine's internal hotkey handler
+
+Graphic: Base class for dealing with Graphic images (Abstract)
+
+GraphicControl: Class that supports simple lightweight controls that do not need the ability to accept keyboard input or contain other controls. 
+
+GroupBox: The groupbox class is like a Panel, but then has a header on top
+
+Hexadecimalview: The visual hexadecimal object used on the memory view window
+
+Image: The Image class is a visual component that lets you show an image
+
+Label: The Label class is a visual component that lets you display text
+
+ListBox: The listbox class is a visual component with a list of selectable strings
+
+ListColumn: The listcolumn class is an implemented CollectionItem class which is used by the ListColumns class of the listview class
+
+ListColumns: The ListColumns class contains the Column class objects of a ListView object
+
+ListItem: The ListItem class object is an entry in a ListView
+
+ListItems: The listItems class is a container for the ListItem class objects of a Listview
+
+Listview: The listview class lets you have a listbox like component with resizable columns
+
+MainMenu: The menu at the top of a form
+
+Memo: The Memo class is a multiline edit field
+
+MemScan: The memscan class is the memory scanner of Cheat engine
+
+Menu: Common Class ancestor for the MainMenu and PopupMenu classes
+
+MenuItem: Holds the menuitems of a Menu, PopupMenu or even another MenuItem
+
+MemoryRecord: The Memoryrecord class object describes a Cheat Table's Cheat Entry.
+
+MemoryRecordHotkey: The memoryRecordHotkey class object is part of a MemoryRecord class. It's used as an interface to each individual hotkey inside a Cheat Table
+
+MemoryStream: The memorystream class is a Stream class that is stored completely in memory. Because it's a stream there are multiple functions that can work with it
+
+Memoryview: The memoryview class is the Memory view window of Cheat Engine. Use this as a basis to access the objects inside this window
+
+Object : Most basic class. All classes inherit from this class
+
+Panel: The Panel class is like a form which can contain visual components.
+
+Pen: The Pen class is part of the Canvas object. It's used to draw lines
+
+Picture: Container for the Graphic class
+
+PopupMenu: The menu that shows when rightclicking on an object
+
+ProgressBar: The progressbar class is a visual representation for a bar that can show the current progress on something
+
+RadioGroup: The radiogroup is like a GroupBox but autopopulated using the Items(Strings object)
+
+OpenDialog: The OpenDialog class is used for selecting files to open.
+
+SaveDialog: The SaveDialog class is based on the OpenDialog class but is used to select a file for saving
+
+Splitter: The Splitter class is a visual component that lets the user re-size neighboring components)
+
+Stringlist: Class that holds a list of strings
+
+Strings: Abstract class that some text based classes make use of
+
+TableFile: Tablefiles are files stored into a Cheat Table. You can access the data of such a file using this class
+
+Timer: The timer class is an non visual component that when active triggers an onTimer event every few milliseconds, based on the given interval
+
+ToggleBox: The togglebox is like a button, but can stay down. Use with the checkbox methods
+
+TrackBar: The trackbar class is a slider you can drag arround and read/set the state
+
+Wincontrol: Base class for controls which can contain other controls.
+
+getPropertyList : Returns a StringList object containing all the published properties of the specified class
+
+setProperty : Sets the value of a published property of a class (Won't work for method properties)
+
+getProperty : Gets the value of a published property of a class (Won't work for method properties)
+
+
+
+Lua Commands in JSON format
+===
+(base URL is http://wiki.cheatengine.org/)
+
+{
+    "AOBScan": {
+        "description": "AOBScan: Scans the currently opened process and returns a StringList object containing all the results",
+        "url": "/index.php?title=AOBScan&action=edit&redlink=1"
+    },
+    "Addresslist": {
+        "description": "Addresslist: The addresslist class is a container for memory records",
+        "url": "/index.php?title=Addresslist"
+    },
+    "Brush": {
+        "description": "Brush: The brush class is part of the Canvas object. It's used to fill surfaces",
+        "url": "/index.php?title=Brush&action=edit&redlink=1"
+    },
+    "Button": {
+        "description": "Button: The button class is a visual component in the shape of a button.",
+        "url": "/index.php?title=Button&action=edit&redlink=1"
+    },
+    "ButtonControl": {
+        "description": "ButtonControl: Common ancestor of several button like objects.",
+        "url": "/index.php?title=ButtonControl&action=edit&redlink=1"
+    },
+    "Canvas": {
+        "description": "Canvas: The canvas class is a graphical class. It allows you do draw lines, pictures, and text on top of other object. Usually used in onPaint events and other graphical events ",
+        "url": "/index.php?title=Canvas&action=edit&redlink=1"
+    },
+    "CheatComponent": {
+        "description": "CheatComponent: The cheatcomponent class is the component used in Cheat Engine 5.x trainers",
+        "url": "/index.php?title=CheatComponent&action=edit&redlink=1"
+    },
+    "CheckBox": {
+        "description": "CheckBox: The Checkbox is a visual component that lets the user click it and change state between checked, unchecked, and if possible, grayed",
+        "url": "/index.php?title=CheckBox"
+    },
+    "Collection": {
+        "description": "Collection: The Collection class is an abstract class that the ListColumns class implements (And perhaps other classes as well)",
+        "url": "/index.php?title=Collection&action=edit&redlink=1"
+    },
+    "CollectionItem": {
+        "description": "CollectionItem:  Basic object that is managed by a Collection class",
+        "url": "/index.php?title=CollectionItem&action=edit&redlink=1"
+    },
+    "ComboBox": {
+        "description": "ComboBox: The Combobox is like an edit field with a ListBox attached to it",
+        "url": "/index.php?title=ComboBox"
+    },
+    "Component": {
+        "description": "Component\u00a0: Base class for all components that need owner-owned functionality.",
+        "url": "/index.php?title=Component"
+    },
+    "Control": {
+        "description": "Control\u00a0: Base class for visible controls.",
+        "url": "/index.php?title=Control"
+    },
+    "CustomControl": {
+        "description": "CustomControl: Base class for windowed controls which paint themselves",
+        "url": "/index.php?title=CustomControl&action=edit&redlink=1"
+    },
+    "Disassemblerview": {
+        "description": "Disassemblerview: The visual disassembler used in the memory view window",
+        "url": "/index.php?title=Disassemblerview&action=edit&redlink=1"
+    },
+    "Edit": {
+        "description": "Edit: The Edit class is a visual component that lets the user type in data (Use control_getCaption to get the user input)",
+        "url": "/index.php?title=Edit"
+    },
+    "FileStream": {
+        "description": "FileStream: The FileStream class is a Stream class that is linked to an open file on disk",
+        "url": "/index.php?title=FileStream&action=edit&redlink=1"
+    },
+    "Font": {
+        "description": "Font: Class that defines a font",
+        "url": "/index.php?title=Font&action=edit&redlink=1"
+    },
+    "Form": {
+        "description": "Form: Class that defines a window",
+        "url": "/index.php?title=Form"
+    },
+    "FoundList": {
+        "description": "FoundList: The foundlist is an companion class to MemScan. It opens the current memscan's result file and provides an interface for reading out the addresses",
+        "url": "/index.php?title=FoundList&action=edit&redlink=1"
+    },
+    "GenericHotkey": {
+        "description": "GenericHotkey: Lets you register hotkeys to Cheat Engine's internal hotkey handler",
+        "url": "/index.php?title=GenericHotkey&action=edit&redlink=1"
+    },
+    "Graphic": {
+        "description": "Graphic: Base class for dealing with Graphic images (Abstract)",
+        "url": "/index.php?title=Graphic&action=edit&redlink=1"
+    },
+    "GraphicControl": {
+        "description": "GraphicControl: Class that supports simple lightweight controls that do not need the ability to accept keyboard input or contain other controls. ",
+        "url": "/index.php?title=GraphicControl&action=edit&redlink=1"
+    },
+    "GroupBox": {
+        "description": "GroupBox: The groupbox class is like a Panel, but then has a header on top",
+        "url": "/index.php?title=GroupBox&action=edit&redlink=1"
+    },
+    "Hexadecimalview": {
+        "description": "Hexadecimalview: The visual hexadecimal object used on the memory view window",
+        "url": "/index.php?title=Hexadecimalview&action=edit&redlink=1"
+    },
+    "Image": {
+        "description": "Image: The Image class is a visual component that lets you show an image",
+        "url": "/index.php?title=Image&action=edit&redlink=1"
+    },
+    "Label": {
+        "description": "Label: The Label class is a visual component that lets you display text",
+        "url": "/index.php?title=Label"
+    },
+    "ListBox": {
+        "description": "ListBox: The listbox class is a visual component with a list of selectable strings",
+        "url": "/index.php?title=ListBox&action=edit&redlink=1"
+    },
+    "ListColumn": {
+        "description": "ListColumn: The listcolumn class is an implemented CollectionItem class which is used by the ListColumns class of the listview class",
+        "url": "/index.php?title=ListColumn&action=edit&redlink=1"
+    },
+    "ListColumns": {
+        "description": "ListColumns: The ListColumns class contains the Column class objects of a ListView object",
+        "url": "/index.php?title=ListColumns&action=edit&redlink=1"
+    },
+    "ListItem": {
+        "description": "ListItem: The ListItem class object is an entry in a ListView",
+        "url": "/index.php?title=ListItem&action=edit&redlink=1"
+    },
+    "ListItems": {
+        "description": "ListItems: The listItems class is a container for the ListItem class objects of a Listview",
+        "url": "/index.php?title=ListItems&action=edit&redlink=1"
+    },
+    "Listview": {
+        "description": "Listview: The listview class lets you have a listbox like component with resizable columns",
+        "url": "/index.php?title=Listview&action=edit&redlink=1"
+    },
+    "MainMenu": {
+        "description": "MainMenu: The menu at the top of a form",
+        "url": "/index.php?title=MainMenu&action=edit&redlink=1"
+    },
+    "MemScan": {
+        "description": "MemScan: The memscan class is the memory scanner of Cheat engine",
+        "url": "/index.php?title=MemScan&action=edit&redlink=1"
+    },
+    "Memo": {
+        "description": "Memo: The Memo class is a multiline edit field",
+        "url": "/index.php?title=Memo"
+    },
+    "MemoryRecord": {
+        "description": "MemoryRecord: The Memoryrecord class object describes a Cheat Table's Cheat Entry.",
+        "url": "/index.php?title=MemoryRecord"
+    },
+    "MemoryRecordHotkey": {
+        "description": "MemoryRecordHotkey: The memoryRecordHotkey class object is part of a MemoryRecord class. It's used as an interface to each individual hotkey inside a Cheat Table",
+        "url": "/index.php?title=MemoryRecordHotkey&action=edit&redlink=1"
+    },
+    "MemoryStream": {
+        "description": "MemoryStream: The memorystream class is a Stream class that is stored completely in memory. Because it's a stream there are multiple functions that can work with it",
+        "url": "/index.php?title=MemoryStream&action=edit&redlink=1"
+    },
+    "Memoryview": {
+        "description": "Memoryview: The memoryview class is the Memory view window of Cheat Engine. Use this as a basis to access the objects inside this window",
+        "url": "/index.php?title=Memoryview&action=edit&redlink=1"
+    },
+    "Menu": {
+        "description": "Menu: Common Class ancestor for the MainMenu and PopupMenu classes",
+        "url": "/index.php?title=Menu&action=edit&redlink=1"
+    },
+    "MenuItem": {
+        "description": "MenuItem: Holds the menuitems of a Menu, PopupMenu or even another MenuItem",
+        "url": "/index.php?title=MenuItem"
+    },
+    "Object": {
+        "description": "Object\u00a0: Most basic class. All classes inherit from this class",
+        "url": "/index.php?title=Object"
+    },
+    "OpenDialog": {
+        "description": "OpenDialog: The OpenDialog class is used for selecting files to open.",
+        "url": "/index.php?title=OpenDialog"
+    },
+    "Panel": {
+        "description": "Panel: The Panel class is like a form which can contain visual components.",
+        "url": "/index.php?title=Panel"
+    },
+    "Pen": {
+        "description": "Pen: The Pen class is part of the Canvas object. It's used to draw lines",
+        "url": "/index.php?title=Pen&action=edit&redlink=1"
+    },
+    "Picture": {
+        "description": "Picture: Container for the Graphic class",
+        "url": "/index.php?title=Picture&action=edit&redlink=1"
+    },
+    "PopupMenu": {
+        "description": "PopupMenu: The menu that shows when rightclicking on an object",
+        "url": "/index.php?title=PopupMenu&action=edit&redlink=1"
+    },
+    "ProgressBar": {
+        "description": "ProgressBar: The progressbar class is a visual representation for a bar that can show the current progress on something",
+        "url": "/index.php?title=ProgressBar"
+    },
+    "RadioGroup": {
+        "description": "RadioGroup: The radiogroup is like a GroupBox but autopopulated using the Items(Strings object)",
+        "url": "/index.php?title=RadioGroup&action=edit&redlink=1"
+    },
+    "SaveDialog": {
+        "description": "SaveDialog: The SaveDialog class is based on the OpenDialog class but is used to select a file for saving",
+        "url": "/index.php?title=SaveDialog"
+    },
+    "Splitter": {
+        "description": "Splitter: The Splitter class is a visual component that lets the user re-size neighboring components)",
+        "url": "/index.php?title=Splitter&action=edit&redlink=1"
+    },
+    "Stringlist": {
+        "description": "Stringlist: Class that holds a list of strings",
+        "url": "/index.php?title=Stringlist"
+    },
+    "Strings": {
+        "description": "Strings: Abstract class that some text based classes make use of",
+        "url": "/index.php?title=Strings&action=edit&redlink=1"
+    },
+    "TableFile": {
+        "description": "TableFile: Tablefiles are files stored into a Cheat Table. You can access the data of such a file using this class",
+        "url": "/index.php?title=TableFile&action=edit&redlink=1"
+    },
+    "Timer": {
+        "description": "Timer: The timer class is an non visual component that when active triggers an onTimer event every few milliseconds, based on the given interval",
+        "url": "/index.php?title=Timer"
+    },
+    "ToggleBox": {
+        "description": "ToggleBox: The togglebox is like a button, but can stay down. Use with the checkbox methods",
+        "url": "/index.php?title=ToggleBox&action=edit&redlink=1"
+    },
+    "TrackBar": {
+        "description": "TrackBar: The trackbar class is a slider you can drag arround and read/set the state",
+        "url": "/index.php?title=TrackBar&action=edit&redlink=1"
+    },
+    "Wincontrol": {
+        "description": "Wincontrol: Base class for controls which can contain other controls.",
+        "url": "/index.php?title=Wincontrol&action=edit&redlink=1"
+    },
+    "allocateSharedMemory": {
+        "description": "allocateSharedMemory: Creates/reuses a shared memory object.",
+        "url": "/index.php?title=allocateSharedMemory"
+    },
+    "autoAssemble": {
+        "description": "autoAssemble: Runs the auto assembler with the given text",
+        "url": "/index.php?title=autoAssemble"
+    },
+    "beep": {
+        "description": "beep: Plays the fabulous beep/ping sound!",
+        "url": "/index.php?title=beep"
+    },
+    "cheatEngineIs64Bit": {
+        "description": "cheatEngineIs64Bit: Returns true if CE is 64-bit, false if 32-bit",
+        "url": "/index.php?title=cheatEngineIs64Bit"
+    },
+    "closeCE": {
+        "description": "closeCE: Closes ce",
+        "url": "/index.php?title=closeCE"
+    },
+    "createProcess": {
+        "description": "createProcess: Creates a process with or without debugging",
+        "url": "/index.php?title=createProcess"
+    },
+    "custom type": {
+        "description": "registerCustomTypeLua: Registers a custom type based on Lua functions.",
+        "url": "/index.php?title=custom_type&action=edit&redlink=1"
+    },
+    "dbk_executeKernelMemory": {
+        "description": "dbk_executeKernelMemory: Executes a routine from kernelmode (e.g a routine written there with auto assembler)",
+        "url": "/index.php?title=dbk_executeKernelMemory&action=edit&redlink=1"
+    },
+    "dbk_getPEProcess": {
+        "description": "dbk_getPEProcess: Returns the pointer of the EProcess structure of the selected processid",
+        "url": "/index.php?title=dbk_getPEProcess&action=edit&redlink=1"
+    },
+    "dbk_getPEThread": {
+        "description": "dbk_getPEThread: Gets the pointer to the EThread structure of a threadid",
+        "url": "/index.php?title=dbk_getPEThread&action=edit&redlink=1"
+    },
+    "dbk_initialize": {
+        "description": "dbk_initialize: Loads the DBK driver into memory if possible",
+        "url": "/index.php?title=dbk_initialize&action=edit&redlink=1"
+    },
+    "dbk_readMSR": {
+        "description": "dbk_readMSR: Reads the msr using the dbk driver",
+        "url": "/index.php?title=dbk_readMSR&action=edit&redlink=1"
+    },
+    "dbk_useKernelmodeOpenProcess": {
+        "description": "dbk_useKernelmodeOpenProcess: Switches the internal pointer of the OpenProcess api to dbk_OpenProcess",
+        "url": "/index.php?title=dbk_useKernelmodeOpenProcess&action=edit&redlink=1"
+    },
+    "dbk_useKernelmodeProcessMemoryAccess": {
+        "description": "dbk_useKernelmodeProcessMemoryAccess: Switches the internal pointer to the ReadProcessMemory and WriteProcessMemory apis to dbk_ReadProcessMemory and dbk_WriteProcessMemory",
+        "url": "/index.php?title=dbk_useKernelmodeProcessMemoryAccess&action=edit&redlink=1"
+    },
+    "dbk_useKernelmodeQueryMemoryRegions": {
+        "description": "dbk_useKernelmodeQueryMemoryRegions: Switches the internal pointer to the QueryVirtualMemory api to dbk_QueryVirtualMemory",
+        "url": "/index.php?title=dbk_useKernelmodeQueryMemoryRegions&action=edit&redlink=1"
+    },
+    "dbk_writeMSR": {
+        "description": "dbk_writeMSR: Writes the msr using the dbk driver",
+        "url": "/index.php?title=dbk_writeMSR&action=edit&redlink=1"
+    },
+    "dbvm_initialize": {
+        "description": "dbvm_initialize: Initializes the dbvm functions",
+        "url": "/index.php?title=dbvm_initialize&action=edit&redlink=1"
+    },
+    "dbvm_readMSR": {
+        "description": "dbvm_readMSR: Reads the msr using dbvm (bypasses the driver)",
+        "url": "/index.php?title=dbvm_readMSR&action=edit&redlink=1"
+    },
+    "dbvm_writeMSR": {
+        "description": "dbvm_writeMSR: Writes the msr using dbvm (bypasses the driver)",
+        "url": "/index.php?title=dbvm_writeMSR&action=edit&redlink=1"
+    },
+    "debugProcess": {
+        "description": "debugProcess: Debugs the currently attached process",
+        "url": "/index.php?title=debugProcess"
+    },
+    "debug_continueFromBreakpoint": {
+        "description": "debug_continueFromBreakpoint: Continues the debugger when it's halted on a breakpoint",
+        "url": "/index.php?title=debug_continueFromBreakpoint"
+    },
+    "debug_getContext": {
+        "description": "debug_getContext (since 6.5): Force-update the Lua variables representing the registers?",
+        "url": "/index.php?title=debug_getContext&action=edit&redlink=1"
+    },
+    "debug_getLastBranchRecord": {
+        "description": "debug_getLastBranchRecord: Returns the value of the Last Branch Record at the given index (when handling a breakpoint)",
+        "url": "/index.php?title=debug_getLastBranchRecord&action=edit&redlink=1"
+    },
+    "debug_getMaxLastBranchRecord": {
+        "description": "debug_getMaxLastBranchRecord: Returns the maximum number of branch records this cpu supports",
+        "url": "/index.php?title=debug_getMaxLastBranchRecord&action=edit&redlink=1"
+    },
+    "debug_removeBreakpoint": {
+        "description": "debug_removeBreakpoint: Removes a breakpoint",
+        "url": "/index.php?title=debug_removeBreakpoint&action=edit&redlink=1"
+    },
+    "debug_setBreakpoint": {
+        "description": "debug_setBreakpoint: Sets a breakpoint of a specific size at the given address",
+        "url": "/index.php?title=debug_setBreakpoint"
+    },
+    "debug_setContext": {
+        "description": "debug_setContext (since 6.5[1]): Force-update the registers to the Lua variables which represent them?",
+        "url": "/index.php?title=debug_setContext&action=edit&redlink=1"
+    },
+    "debug_setLastBranchRecording": {
+        "description": "debug_setLastBranchRecording: Tells the kernelmode debugger to record the last few branches before the breakpoint got hit",
+        "url": "/index.php?title=debug_setLastBranchRecording&action=edit&redlink=1"
+    },
+    "debugger_onBreakpoint": {
+        "description": "debugger_onBreakpoint: Called by CE when a breakpoint hits (userdefined)",
+        "url": "/index.php?title=debugger_onBreakpoint"
+    },
+    "debugger_onModuleLoad": {
+        "description": "debugger_onModuleLoad: Called by CE when the windows debugger interface loads a module (userdefined)",
+        "url": "/index.php?title=debugger_onModuleLoad&action=edit&redlink=1"
+    },
+    "disassemble": {
+        "description": "disassemble: Disassembles the given address and returns a string in the format of \"address - bytes - opcode  extra\"",
+        "url": "/index.php?title=disassemble&action=edit&redlink=1"
+    },
+    "doKeyPress": {
+        "description": "doKeyPress: Simulates a key press",
+        "url": "/index.php?title=doKeyPress"
+    },
+    "errorOnLookupFailure": {
+        "description": "errorOnLookupFailure: Set whether address lookups will throw errors, or just return 0.",
+        "url": "/index.php?title=errorOnLookupFailure"
+    },
+    "findTableFile": {
+        "description": "findTableFile: Returns a TableFile stored in the cheat table",
+        "url": "/index.php?title=findTableFile"
+    },
+    "fuckCheatEngine": {
+        "description": "fuckCheatEngine: Removes the ad window if it was showing",
+        "url": "/index.php?title=fuckCheatEngine"
+    },
+    "generateAPIHookScript": {
+        "description": "generateAPIHookScript: Generates an auto assembler script which will hook the given address when executed",
+        "url": "/index.php?title=generateAPIHookScript"
+    },
+    "getAddress": {
+        "description": "getAddress: Returns the address of a symbol. Can be a modulename or an export",
+        "url": "/index.php?title=getAddress"
+    },
+    "getAddressList": {
+        "description": "getAddressList: Returns the cheat table addresslist object",
+        "url": "/index.php?title=getAddressList"
+    },
+    "getAutoAttachList": {
+        "description": "getAutoAttachList: Returns the AutoAttach StringList object",
+        "url": "/index.php?title=getAutoAttachList&action=edit&redlink=1"
+    },
+    "getCheatEngineDir": {
+        "description": "getCheatEngineDir: Returns the folder Cheat Engine (or the trainer) is located at.",
+        "url": "/index.php?title=getCheatEngineDir"
+    },
+    "getCommonModuleList": {
+        "description": "getCommonModuleList: Returns the commonModuleList StringList object",
+        "url": "/index.php?title=getCommonModuleList"
+    },
+    "getCurrentMemscan": {
+        "description": "getCurrentMemscan: Returns the currently active scan session as a MemScan object",
+        "url": "/index.php?title=getCurrentMemscan&action=edit&redlink=1"
+    },
+    "getForegroundProcess": {
+        "description": "getForegroundProcess: Returns the processid of the current foreground window",
+        "url": "/index.php?title=getForegroundProcess"
+    },
+    "getForm": {
+        "description": "getForm: Returns the form at the specific index",
+        "url": "/index.php?title=getForm&action=edit&redlink=1"
+    },
+    "getFormCount": {
+        "description": "getFormCount: Returns the total number of forms assigned to the main CE application",
+        "url": "/index.php?title=getFormCount&action=edit&redlink=1"
+    },
+    "getFreezeTimer": {
+        "description": "getFreezeTimer: Returns the Timer object responsible for freezing values",
+        "url": "/index.php?title=getFreezeTimer&action=edit&redlink=1"
+    },
+    "getInstructionSize": {
+        "description": "getInstructionSize: Returns the size of an instruction",
+        "url": "/index.php?title=getInstructionSize&action=edit&redlink=1"
+    },
+    "getMainForm": {
+        "description": "getMainForm: Returns the first Mainform class object",
+        "url": "/index.php?title=getMainForm&action=edit&redlink=1"
+    },
+    "getMemoryViewForm": {
+        "description": "getMemoryViewForm: Returns the first Memoryview form class object",
+        "url": "/index.php?title=getMemoryViewForm&action=edit&redlink=1"
+    },
+    "getMousePos": {
+        "description": "getMousePos: Returns the x,y coordinates of the mouse",
+        "url": "/index.php?title=getMousePos"
+    },
+    "getNameFromAddress": {
+        "description": "getNameFromAddress: Returns the given address in string form, returning the symbol representation if possible",
+        "url": "/index.php?title=getNameFromAddress"
+    },
+    "getOpenedProcessID": {
+        "description": "getOpenedProcessID: Returns the currently opened process",
+        "url": "/index.php?title=getOpenedProcessID"
+    },
+    "getPixel": {
+        "description": "getPixel: Returns the rgb value of the pixel at the specific screen coordinate",
+        "url": "/index.php?title=getPixel"
+    },
+    "getPreviousOpcode": {
+        "description": "getPreviousOpcode: Returns the address of the previous opcode (guess)",
+        "url": "/index.php?title=getPreviousOpcode&action=edit&redlink=1"
+    },
+    "getProcessIDFromProcessName": {
+        "description": "getProcessIDFromProcessName: Returns a processid",
+        "url": "/index.php?title=getProcessIDFromProcessName"
+    },
+    "getProperty": {
+        "description": "getProperty\u00a0: Gets the value of a published property of a class (Won't work for method properties)",
+        "url": "/index.php?title=getProperty&action=edit&redlink=1"
+    },
+    "getPropertyList": {
+        "description": "getPropertyList\u00a0: Returns a StringList object containing all the published properties of the specified class",
+        "url": "/index.php?title=getPropertyList&action=edit&redlink=1"
+    },
+    "getUpdateTimer": {
+        "description": "getUpdateTimer: Returns the Timer object responsible for updating the value list",
+        "url": "/index.php?title=getUpdateTimer&action=edit&redlink=1"
+    },
+    "hideAllCEWindows": {
+        "description": "hideAllCEWindows: Makes all normal ce windows invisible (e.g trainer table)",
+        "url": "/index.php?title=hideAllCEWindows&action=edit&redlink=1"
+    },
+    "inModule": {
+        "description": "inModule: Returns true if the given address is inside a module",
+        "url": "/index.php?title=inModule"
+    },
+    "inSystemModule": {
+        "description": "inSystemModule: Returns true if the given address is inside a system module",
+        "url": "/index.php?title=inSystemModule"
+    },
+    "inheritsFromComponent": {
+        "description": "inheritsFromComponent: Returns true if the given object inherits from the Component class",
+        "url": "/index.php?title=inheritsFromComponent&action=edit&redlink=1"
+    },
+    "inheritsFromControl": {
+        "description": "inheritsFromControl: Returns true if the given object inherits from the Control class",
+        "url": "/index.php?title=inheritsFromControl&action=edit&redlink=1"
+    },
+    "inheritsFromObject": {
+        "description": "inheritsFromObject: Returns true if given any class",
+        "url": "/index.php?title=inheritsFromObject&action=edit&redlink=1"
+    },
+    "inheritsFromWinControl": {
+        "description": "inheritsFromWinControl: Returns true if the given object inherits from the WinControl class",
+        "url": "/index.php?title=inheritsFromWinControl&action=edit&redlink=1"
+    },
+    "injectDll": {
+        "description": "injectDll: Injects a dll",
+        "url": "/index.php?title=injectDll"
+    },
+    "isKeyPressed": {
+        "description": "isKeyPressed: Returns true if the specified key is currently pressed",
+        "url": "/index.php?title=isKeyPressed"
+    },
+    "keyDown": {
+        "description": "keyDown: Causes the key to go into down state",
+        "url": "/index.php?title=keyDown"
+    },
+    "keyUp": {
+        "description": "keyUp: Causes the key to go up",
+        "url": "/index.php?title=keyUp"
+    },
+    "messageDialog": {
+        "description": "messageDialog: Pops up a messagebox",
+        "url": "/index.php?title=messageDialog"
+    },
+    "onAPIPointerChange": {
+        "description": "onAPIPointerChange: Registers a callback when an api pointer is changed",
+        "url": "/index.php?title=onAPIPointerChange&action=edit&redlink=1"
+    },
+    "onAutoGuess": {
+        "description": "onAutoGuess: Registers an function to be called whenever autoguess is used to predict a variable type.",
+        "url": "/index.php?title=onAutoGuess"
+    },
+    "onOpenProcess": {
+        "description": "onOpenProcess: Called by CE when it opens a process (userdefined)",
+        "url": "/index.php?title=onOpenProcess&action=edit&redlink=1"
+    },
+    "openProcess": {
+        "description": "openProcess: Causes cheat engine to open the given processname or id",
+        "url": "/index.php?title=openProcess"
+    },
+    "pause": {
+        "description": "pause: Pauses the current opened process",
+        "url": "/index.php?title=pause"
+    },
+    "playSound": {
+        "description": "playSound: Plays a sound file",
+        "url": "/index.php?title=playSound"
+    },
+    "readBytes": {
+        "description": "readBytes: Returns the bytes at the given address. If ReturnAsTable is true it will return a table instead of multiple bytes",
+        "url": "/index.php?title=readBytes"
+    },
+    "readBytesLocal": {
+        "description": "readBytesLocal: readBytes, but for Cheat Engine's own memory",
+        "url": "/index.php?title=readBytesLocal"
+    },
+    "readDouble": {
+        "description": "readDouble: Reads a double precision floating point value from the specified address",
+        "url": "/index.php?title=readDouble"
+    },
+    "readFloat": {
+        "description": "readFloat: Reads a single precision floating point value from the specified address",
+        "url": "/index.php?title=readFloat"
+    },
+    "readInteger": {
+        "description": "readInteger: Reads a integer from the specified address",
+        "url": "/index.php?title=readInteger"
+    },
+    "readRegionFromFile": {
+        "description": "readRegionFromFile: Writes the given file to a specific address",
+        "url": "/index.php?title=readRegionFromFile"
+    },
+    "readString": {
+        "description": "readString: Reads a string from memory until it hits a 0-terminator. maxlength is just so you won't freeze for too long",
+        "url": "/index.php?title=readString"
+    },
+    "registerCustomTypeAutoAssembler": {
+        "description": "registerCustomTypeAutoAssembler: Registers a custom type based on an auto assembler script.",
+        "url": "/index.php?title=registerCustomTypeAutoAssembler"
+    },
+    "registerCustomTypeLua": {
+        "description": "registerCustomTypeLua: Registers a custom type based on Lua functions.",
+        "url": "/index.php?title=registerCustomTypeLua"
+    },
+    "registerSymbol": {
+        "description": "registerSymbol: Assign the specified symbolname to an address",
+        "url": "/index.php?title=registerSymbol"
+    },
+    "reinitializeSymbolhandler": {
+        "description": "reinitializeSymbolhandler: Reinitializes the symbolhandler. E.g when new modules have been loaded",
+        "url": "/index.php?title=reinitializeSymbolhandler"
+    },
+    "resetLuaState": {
+        "description": "resetLuaState: This will create a new Lua state that will be used.",
+        "url": "/index.php?title=resetLuaState"
+    },
+    "setAPIPointer": {
+        "description": "setAPIPointer: Sets the pointer of the given api to the given address",
+        "url": "/index.php?title=setAPIPointer&action=edit&redlink=1"
+    },
+    "setMousePos": {
+        "description": "setMousePos: Sets the mouse position",
+        "url": "/index.php?title=setMousePos"
+    },
+    "setProperty": {
+        "description": "setProperty\u00a0: Sets the value of a published property of a class (Won't work for method properties)",
+        "url": "/index.php?title=setProperty&action=edit&redlink=1"
+    },
+    "shellExecute": {
+        "description": "shellExecute: Executes a given command",
+        "url": "/index.php?title=shellExecute"
+    },
+    "showMessage": {
+        "description": "showMessage: Shows a messagebox with the given text",
+        "url": "/index.php?title=showMessage"
+    },
+    "sleep": {
+        "description": "sleep: Pauses for the number of specified milliseconds",
+        "url": "/index.php?title=sleep"
+    },
+    "speedhack_setSpeed": {
+        "description": "speedhack_setSpeed: Enables the speedhack if it was not active yet and sets the given speed",
+        "url": "/index.php?title=speedhack_setSpeed"
+    },
+    "splitDisassembledString": {
+        "description": "splitDisassembledString: Returns 4 strings. The address, bytes, opcode and extra field",
+        "url": "/index.php?title=splitDisassembledString&action=edit&redlink=1"
+    },
+    "supportCheatEngine": {
+        "description": "supportCheatEngine: Will show an advertising window which will help keep the development of Cheat Engine going.",
+        "url": "/index.php?title=supportCheatEngine&action=edit&redlink=1"
+    },
+    "targetIs64Bit": {
+        "description": "targetIs64Bit: Returns true if the target process is 64-bit, false if 32-bit",
+        "url": "/index.php?title=targetIs64Bit"
+    },
+    "unhideMainCEwindow": {
+        "description": "unhideMainCEwindow: Shows the main cheat engine window",
+        "url": "/index.php?title=unhideMainCEwindow&action=edit&redlink=1"
+    },
+    "unpause": {
+        "description": "unpause: Resumes the current opened process",
+        "url": "/index.php?title=unpause"
+    },
+    "unregisterSymbol": {
+        "description": "unregisterSymbol: Remove the name from the address",
+        "url": "/index.php?title=unregisterSymbol"
+    },
+    "writeBytes": {
+        "description": "writeBytes: Write the given bytes to the given address from a table",
+        "url": "/index.php?title=writeBytes"
+    },
+    "writeBytesLocal": {
+        "description": "writeBytesLocal: writeBytes, but for Cheat Engine's own memory",
+        "url": "/index.php?title=writeBytesLocal"
+    },
+    "writeDouble": {
+        "description": "writeDouble: Writes a double precision floating point to the specified address",
+        "url": "/index.php?title=writeDouble"
+    },
+    "writeFloat": {
+        "description": "writeFloat: Writes a single precision floating point to the specified address",
+        "url": "/index.php?title=writeFloat"
+    },
+    "writeInteger": {
+        "description": "writeInteger: Writes an integer to the specified address",
+        "url": "/index.php?title=writeInteger"
+    },
+    "writeRegionToFile": {
+        "description": "writeRegionToFile: Writes the given region to a file. Returns the number of bytes written",
+        "url": "/index.php?title=writeRegionToFile"
+    },
+    "writeString": {
+        "description": "writeString: Write a string to the specified address",
+        "url": "/index.php?title=writeString"
+    },
+    "xmplayer_isPlaying": {
+        "description": "xmplayer_isPlaying: Returns true if there is currenty an xm audio file being played",
+        "url": "/index.php?title=xmplayer_isPlaying"
+    },
+    "xmplayer_pause": {
+        "description": "xmplayer_pause: Pauses the current xm audio file",
+        "url": "/index.php?title=xmplayer_pause"
+    },
+    "xmplayer_playXM": {
+        "description": "xmplayer_playXM: Plays the given filename using the xmplayer",
+        "url": "/index.php?title=xmplayer_playXM"
+    },
+    "xmplayer_resume": {
+        "description": "xmplayer_resume: Resumes the current xm audio file",
+        "url": "/index.php?title=xmplayer_resume"
+    },
+    "xmplayer_stop": {
+        "description": "xmplayer_stop: Stops the current xm audio file",
+        "url": "/index.php?title=xmplayer_stop"
+    }
+}

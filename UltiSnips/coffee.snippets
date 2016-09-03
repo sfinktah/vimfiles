@@ -1,0 +1,55 @@
+snippet isarray "Array.isArray"
+Array.isArray($1)
+endsnippet
+
+snippet keys "Object.keys"
+Object.keys($1)
+endsnippet
+
+snippet isobject "(typeof .. object)"
+(typeof $1 === 'function' || typeof $1 === 'object' && !!$1)
+endsnippet
+
+snippet con "constructor" a
+constructor: ($1) ->
+  
+endsnippet
+
+snippet class "class & constructor" b
+class $1
+  constructor: ($2) ->
+    
+endsnippet
+
+snippet sclass "Class with static list" b
+class ${1}
+  @list = []
+  @add: (${3:a}, ${4:b}, ${5:c}, ${6:d}, ${7:e}, ${8:f}, ${9:g}, ${10:h}, ${11:m}) ->
+    (@list.push new @(@list.length, $4, $5, $6, $7, $8, $9, $10, $11)) - 1
+  constructor: (@$3, @$4, @$5, @$6, @$7, @$8, @$9, @$10, @$11) ->
+     
+# long $4(...);
+${2:AddStrucEx} = ($3, $4, $5, $6, $7, $8, $9, $10, $11) ->
+  id = $1.add($3, $4, $5, $6, $7, $8, $9, $10, $11)
+endsnippet
+
+snippet meth "method: (args) ->" b
+${1:method}: (${2:args}) ->
+  $0
+endsnippet
+
+snippet event "event handler" w
+(event) ->
+  elem = event.target
+  $elem = $(elem)
+  $0
+endsnippet
+
+snippet funarg "lamba function" w
+(${1:arguments}) ->
+  $0
+endsnippet
+
+snippet isString "isString" w
+(toString.call(${1:var}) == '[object String]')
+endsnippet

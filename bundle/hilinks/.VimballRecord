@@ -1,0 +1,1 @@
+hilinks.vba: call delete('/home/sfink/.vim/bundle/tmp/../hilinks/plugin/hilinks.vim')|call delete('/home/sfink/.vim/bundle/tmp/../hilinks/doc/hilinks.txt')

@@ -1,0 +1,49 @@
+*format.txt*  Convert current file to colored HTML, BBCode or whatever
+==============================================================================
+CONTENTS                                                   *format-contents*
+
+    1. Intro                                      |format-intro|
+    2. Functionality provided                     |format-functionality|
+        2.1. Commands                             |format-commands|
+        2.2. Functions                            |format-functions|
+    3. Options                                    |format-options|
+    4. Format specification description           |format-spec|
+        4.1. Dictionary keys                      |format-spec-keys|
+        4.2. String descriptions                  |format-spec-description|
+    5. List of built-in format specifications     |format-formats|
+
+==============================================================================
+1. Intro                                                      *format-intro*
+
+This plugin provides the ability to convert current file to colored HTML, 
+BBcode, (in future) LaTeX or whatever you have written specification for.
+
+Features:
+    ∙ Flexible format specifications
+    ∙ Ability to create abstract stylesheets
+    ∙ 'list' and 'listchars' options support (only tab, trail and eol for now)
+    ∙ Diffed buffers support (if file is in diff mode and current line is 
+      different from other's file line then foreground color is taken from 
+      current syntaxID and background color is taken from diff syntax ID)
+    ∙ Support for creating numbered lines
+    ∙ Folds support
+
+Plugin requires chk, comp, stuf and load plugins.
+
+==============================================================================
+2. Functionality provided                             *format-functionality*
+
+This plugin provides one command and three functions. One function is accessed 
+via dictionary returned by |load-func-getfunctions| function.
+
+------------------------------------------------------------------------------
+2.1. Commands                                              *format-commands*
+                                                            *format-actions*
+
+:FormatCommand {action} ...               *format-:Command* *:FormatCommand*
+            The only command provided by this plugin. If variable 
+            g:formatOptions exists and has key _cprefix, then prefix Format is 
+            altered. See |load-opt-_cprefix|.
+
+vim: ft=help:tw=78
+

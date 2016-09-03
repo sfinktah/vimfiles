@@ -1,0 +1,8 @@
+snippet fun "function!" b
+function! s:${1:MyFunction}()
+	$2
+endfunction
+com! $1 call s:$1()
+
+$0
+endsnippet

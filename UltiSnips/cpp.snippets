@@ -1,0 +1,22 @@
+snippet is0 "IS_NULL" b
+IS_NULL(${1:void_location});
+$2
+endsnippet
+
+snippet isnt "NOT_NULL" b
+NOT_NULL(${1:void_location});
+$2
+endsnippet
+
+snippet inr "IN_RANGE" b
+ASSERT(${1:ptr} >= InternalMemory::moduleStart && $1 < InternalMemory::moduleEnd);
+$2
+endsnippet
+
+snippet get "getter/setter" b
+private:
+	$1 $3;
+public:
+	$1 ${2:name}() const { return ${3:m_$2}; }  // Getter
+	void $2(${1:type} v) { $3 = v; }            // Setter
+endsnippet

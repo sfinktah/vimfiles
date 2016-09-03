@@ -1,0 +1,374 @@
+" set mps=(:),{:},[:],❮:❯,«:»,‹:›,⟪:⟫,❨:❩,❲:❳,〔:〕,⎛:⎠
+
+" ------------------------------------------------------------------
+" VUNDLE
+" ------------------------------------------------------------------
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'bogado/file-line'
+" Plugin 'samsaga2/vim-z80'
+" ----- snipmate ----
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+" Plugin 'honza/vim-snippets'
+" ----- end: snipmate ---
+" ----- ultisnips ---
+" Track the engine.
+
+" Snippets are separated from the engine. Add this if you want them:
+" Plugin 'marijnh/tern_for_vim'
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+" Plugin 'https://github.com/myhere/vim-nodejs-complete.git'
+" Plugin 'majutsushi/tagbar'
+" Plugin 'nkzawa/js-inspector.vim'
+" Plugin 'bigfish/vim-js-context-coloring'
+Plugin 'https://github.com/vim-scripts/ColorSchemeEditor.git'
+Plugin 'https://github.com/vim-scripts/XML-Folding'
+Plugin 'https://github.com/ldx/vim-indentfinder.git'
+Plugin 'https://github.com/junegunn/vim-easy-align.git' " https://github.com/junegunn/vim-easy-align
+
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<c-space>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" ----- end: ultisnips ---
+
+call vundle#end()
+set t_Co=256
+filetype plugin indent on     " required!
+" ------------------------------------------------------------------
+
+execute pathogen#infect()
+hi NonText cterm=NONE ctermfg=NONE
+" imap <C-o> :set paste<CR>:exe PhpDoc()<CR>:set nopaste<CR>i
+inoremap <F1> <ESC>
+let @a='/internal function on.*arg1.Object.*\n.*{.*\n.*poker.protocoljddjd/\n\nddkkJi XXX'
+let @b='^dwdwi"/("i"hhlli" => hlld/protocolcwr"hxlxj^'
+let Tlist_Close_On_Select = 1
+let Tlist_File_Fold_Auto_Close = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_WinWidth = 40
+let coffee_make_options = '--bare'
+let coffee_watch_vert = 1
+let g:colorizer_startup = 0
+let g:colorizer_maxlines = 1000
+let g:CSApprox_verbose_level = 0
+let g:DoxygenToolkit_briefTag_funcName = "yes"
+let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsExpandTrigger="<c-y>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+" let g:UltiSnipsJumpForwardTrigger="<c-n>"
+" let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+
+let g:UltiSnipsExpandTrigger="<Tab>" " https://github.com/Valloric/YouCompleteMe/issues/36
+let g:UltiSnipsJumpForwardTrigger="<Tab>"                                           
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+
+let g:backup_directory = ".backups"
+let g:backup_purge = 100
+let g:rehash256 = 1
+let g:used_javascript_libs = 'jquery,underscore'
+let g:writebackup_BackupDir = './.~'
+let g:js_context_colors_enabled = 0
+let g:python_host_prog = '/usr/bin/python2.7'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python2.7'
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let g:tern#is_show_argument_hints_enabled = 1
+let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
+let tlist_php_settings = 'php;c:class;f:function;d:constant'
+let javaScript_fold=1         " JavaScript http://stackoverflow.com/questions/4789605/how-do-i-enable-automatic-folds-in-vim
+let perl_fold=1               " Perl
+let php_folding=1             " PHP
+let r_syntax_folding=1        " R
+let ruby_fold=1               " Ruby
+let sh_fold_enabled=1         " sh
+let vimsyn_folding='af'       " Vim script
+let xml_syntax_folding=1      " XML
+let g:PHP_vintage_case_default_indent = 1
+let g:PHP_removeCRwhenUnix = 1
+let g:PHP_outdentphpescape = 1
+
+map <C-q> <C-w><C-w><C-w><C-q>
+map <F4> :emenu <C-Z>
+map <silent><F2> :PREVCOLOR<cr>
+map <silent><F3> :NEXTCOLOR<cr>
+map Q gq
+" Edit/Reload .vimrc
+" nmap <silent> <leader>ev :e $HOME/.tvimrc.sorted<CR>
+nnoremap <leader>ev <C-w><C-v><C-l>:e $HOME/.tvimrc.sorted<cr>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <leader>gd :GlobalDocument<CR>
+nmap <leader>gl :GlobalLine<CR>
+nmap <leader>gs :GlobalSelection<CR>
+nmap <leader>ml :$put =ModelineStub()<CR>
+nmap <silent> <leader>s :set nolist!<CR>
+nnoremap ' `
+nnoremap * :'<,'>s/\C\<<c-r><c-w>\>//g<c-f>$F/i
+nnoremap ; :
+nnoremap <C-h> <C-w>h nnoremap <C-j> <C-w>j nnoremap <C-k> <C-w>k nnoremap <C-l> <C-w>l
+nnoremap <F1> <ESC>
+nnoremap <leader><space> :noh<cr>
+nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>a :Ack
+nnoremap <leader>ft Vatzf
+nnoremap <leader>q gqip
+nnoremap <leader>v V`]
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <tab> %
+nnoremap ` '
+nnoremap j gj
+nnoremap k gk
+set autoindent
+set background=dark
+set backspace=indent,eol,start
+set ch=2                " command height = 2
+set cindent
+set encoding=utf-8
+set expandtab
+set ffs=dos,unix
+" set foldmethod=marker
+set foldmethod=syntax " http://stackoverflow.com/questions/4789605/how-do-i-enable-automatic-folds-in-vim
+set foldlevelstart=1
+set formatoptions=tcroqn1
+set hidden
+set history=1000        " keep 50 lines of command line history
+set hlsearch
+set ic "Ignore case in searches, which is easiest except when programming
+set ignorecase
+set incsearch
+set incsearch           " do incremental searching
+set laststatus=2
+set lazyredraw              " Avoid redrawing the screen mid-command.
+set matchtime=2             " (for only .2 seconds).
+set modelines=5             " they must be within the first or last 5 lines.
+set nocursorline
+set norelativenumber
+set nostartofline           " Avoid moving cursor to BOL when jumping around
+set nowrap
+set ofu=syntaxcomplete#Complete
+set ruler               " show the cursor position all the time
+set scrolljump=5
+set scrolloff=4
+set selection=exclusive " More intuitive selecting in visual mode
+set shiftwidth=0
+set shortmess=atI			" shutup with your prompts
+set showcmd                 " Show incomplete normal mode commands as I type.
+set showmatch               " Briefly jump to a paren once it's balanced
+set showmode
+set smartcase 				" search expression. *-style searches continue to be consistently
+set smartindent
+set synmaxcol=300
+set softtabstop=-1
+set tabstop=4
+set tags=./tags;~/src
+set tags+=$HOME/.vim/tags/php.ctags
+" set notitle
+set title
+set titlestring=%{hostname()}\ vim\ %t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
+set titlestring=%{hostname()}\ vim\ %t%(\ %M%)%(\ (%{expand(\"%:p\")})%)%(\ %a%)
+set titleold=
+set ttyfast
+if !has('nvim')
+   set ttyscroll=5             " Prefer redraw to scrolling for more than 3 lines
+endif
+set undofile
+set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
+set virtualedit=block       " Let cursor move past the last char in <C-v> mode
+set visualbell
+set wcm=<C-Z>               " Ctrl-Z in a mapping acts like <Tab> on cmdline
+set wildmenu                " Menu completion in command mode on <Tab>
+set wildmode=list:longest,full " First tab completes as much as possible and shows the list if there is more than one matching item. Next tabs iterate through the list.
+" " source $VIMRUNTIME/menu.vim " Load menus (this would be done anyway in gvim)
+"
+if has("gui_win32")
+else
+   setlocal errorformat=line\ %l\ column\ %v\ -\ %m
+   setlocal makeprg=tidy\ -i\ -quiet\ -errors\ %
+      source ~/.vim/backup.vim
+   " source ~/.vim/php-doc.vim
+   source ~/.vim/writebackup.vim
+   source ~/.vim/writebackupVersionControl.vim
+   " source ~/.vim/zynga.vim
+   source ~/.vim/ulti.vim
+endif
+syntax enable
+syntax on
+" Test of stuff
+" Make indenting and de-indenting in visual mode preserve the selection:
+vnoremap > ><CR>gv 
+vnoremap < <<CR>gv
+vnoremap <F1> <ESC>
+vnoremap <tab> %
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+nmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+"
+let g:easy_align_delimiters = {
+\ ';': { 'pattern': ';',  'left_margin': 0, 'right_margin': 0, 'stick_to_left': 0 },
+\ '>': { 'pattern': '>>\|=>\|>' },
+\ '/': {
+\     'pattern':         '//\+\|/\*\|\*/',
+\     'delimiter_align': 'l',
+\     'ignore_groups':   ['!Comment'] },
+\ ']': {
+\     'pattern':       '[[\]]',
+\     'left_margin':   0,
+\     'right_margin':  0,
+\     'stick_to_left': 0
+\   },
+\ ')': {
+\     'pattern':       '[()]',
+\     'left_margin':   0,
+\     'right_margin':  0,
+\     'stick_to_left': 0
+\   },
+\ 'd': {
+\     'pattern':      ' \(\S\+\s*[;=]\)\@=',
+\     'left_margin':  0,
+\     'right_margin': 0
+\   }
+\ }
+
+func Eatchar(pat)
+	let c = nr2char(getchar(0))
+	return (c =~ a:pat) ? '' : c
+endfunc
+function! ModelineStub()
+  let fmt = ' vim: set ts=%d sts=%d sw=%d %s: '
+  let x = printf(&cms, printf(fmt, &ts, &sts, &sw, (&et?"et":"noet")))
+  return substitute(substitute(x, '\ \+', ' ', 'g'), ' $', '', '')
+endfunction
+if argc() == 2
+	silent vertical all
+endif
+if (&term =~? '^screen')
+	exe "set title titlestring=vim:%f"
+ 	exe "set title t_ts=\<ESC>k t_fs=\<ESC>\\"
+endif
+if &diff
+	colorscheme xoria256
+endif
+if has('multi_byte')        " If multibyte support is available and
+  if &enc !~? 'utf-\=8'     " the current encoding is not Unicode,
+    if empty(&tenc)         " default to
+      let &tenc = &enc      " using the current encoding for terminal output
+    endif                   " unless another terminal encoding was already set
+    set enc=utf-8           " but use utf-8 for all data internally
+  endif
+endif
+if has("autocmd")
+   augroup plist
+     autocmd!
+     autocmd BufReadPre,FileReadPre *.plist set binary
+     fun MyBinaryPlistReadPost()
+             if getline("'[") =~ "^bplist"
+                     '[,']!plutil -convert xml1 /dev/stdin -o /dev/stdout
+                     let b:saveAsBinaryPlist = 1
+             endif
+             set nobinary
+             filetype detect
+     endfun
+     autocmd BufReadPost *.plist call MyBinaryPlistReadPost()
+     autocmd FileReadPost *.plist call MyBinaryPlistReadPost() | let b:saveAsBinaryPlist = 0
+     fun MyBinaryPlistWritePre()
+             if exists("b:saveAsBinaryPlist") && b:saveAsBinaryPlist
+                     set binary
+                     silent '[,']!plutil -convert binary1 /dev/stdin -o /dev/stdout
+                     if v:shell_error | undo | set nobinary | endif
+             endif
+     endfun
+     autocmd BufWritePre,FileWritePre *.plist call MyBinaryPlistWritePre()
+     fun MyBinaryPlistWritePost()
+             if exists("b:saveAsBinaryPlist") && b:saveAsBinaryPlist && !v:shell_error
+                     undo
+                     set nobinary
+             endif
+     endfun
+     autocmd BufWritePost,FileWritePost *.plist call MyBinaryPlistWritePost()
+   augroup END
+	autocmd BufNewFile,BufRead *.zaplog      setf zaplog
+   " auto BufEnter * let &titlestring = hostname() . " vim " . expand("%:p")
+	autocmd FileType coffee compiler coffee
+	autocmd FileType coffee setl ts=2 sw=2 sts=2 et
+	autocmd FileType javascript setl ts=4 sw=4 sts=4 et
+	autocmd FileType javascript setl ts=4 sw=4 sts=4 et
+   autocmd FileType asm setl ts=8 sw=0 sts=0 noet syntax=nasm
+   autocmd FileType javascript nmap <buffer> <LocalLeader>* <Plug>JsInspectorSearchForward
+	autocmd FileType d set ts=4 sw=2 sts=4
+	autocmd FileType litcoffee runtime ftplugin/coffee.vim
+   autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+   autocmd BufWritePost *.coffee silent make!
+   autocmd FileType coffee setl scrollbind
+   autocmd FileType html,css,smarty set smartindent
+   autocmd FileType python set sts=-1
+   autocmd QuickFixCmdPost * nested cwindow | redraw!
+   autocmd BufRead * try | execute "compiler compile-".&filetype | catch /./ | endtry
+   autocmd FileType cs set ts=4 sw=4
+   autocmd FileType php set keywordprg=pman
+   autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+endif " has("autocmd")
+if &diff
+	colorscheme leo
+else
+   let g:solarized_termcolors=16
+	colorscheme solarized
+endif
+
+
+" Highlight column 80 (Vim 7.3+ only):
+" if v:version >= 703
+    " set cc=80
+    " hi ColorColumn ctermbg=Gray ctermfg=Black guibg=#404040
+    " command Skinny set cc=73
+    " command Wide set cc=80
+" endif
+
+set shortmess+=I " Don’t show the splash screen:
+
+" Scroll the screen with Control+{j,k}:
+map <C-j> 2<C-E>
+map <C-k> 2<C-Y>
+
+
+" Allow middle-click pasting of large texts in terminal
+set pastetoggle=<F5>
+" Clear paste mode when going back to normal mode
+au InsertLeave * set nopaste
+
+" to consier - courtesy of
+" http://antjanus.com/blog/thoughts-and-opinions/use-vim/
+" Vundle – plugin manager. Grabs the repo for a plugin, pulls it, and loads it
+" up
+" Fugitive – git wrapper for using git inside VIM. I don’t use it often but
+" when I do, I’m glad I have it
+" Vim markdown – highlighting for markdown. Has a ton of other features that
+" I’ve yet to explore.
+" Vim less – syntax highlight for less
+" editorconfig vim – obviously, an editor config plugin for vim (to abide by
+" styles set by the .editorconfig file.
+" vim airline – neat statusbar that also keeps track of my buffers
+" vim gitgutter – gitgutter adds my git status next to the line numbers. If
+" I added any lines, deleted, or changed, it shows up as +, -, or ~
+" Nerdtree – file tree utility, works and looks similar to ST2
+" Nerdcommenter – a utility that allows me to comment out large blocks of
+" texts and toggle comment status
+" syntastic – a plugin that checks syntax for me for mistakes and problems
+" vim-jade – jade syntax support for vim
+" tabular – a formatting tool, allows me to align my = signs
+" command-t – a quick search/lookup/open tool for files in my project
+" vim: set ts=3 sts=0 sw=0 et:

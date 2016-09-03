@@ -1,0 +1,58 @@
+snippet ahref
+<a href="$1"${2: class="${3:link}"}>
+    $1
+</a>
+endsnippet
+
+snippet xfnum "xf numeric input" b
+<li>
+	<label
+		for="ctrl_${1:name}"><input
+		type="text"
+		name="page_$1"
+		class="textCtrl" 
+		id="ctrl_$1"
+		maxlength="2"
+		value="0" 
+		style="width: ${4:30px};"
+	> ${2:The Input's Description}
+	</label>
+
+	<p class="hint">${3:Some meaningful help text was meant to go here}</p>
+</li>
+
+endsnippet
+
+snippet xftext "xf text input" b
+<li>
+	<label
+		for="ctrl_${1:name}"><input
+		type="text"
+		name="page_$1"
+		class="textCtrl" 
+		id="ctrl_$1"
+	> ${2:The Input's Description}
+	</label>
+
+	<p class="hint">${3:Some meaningful help text was meant to go here}</p>
+</li>
+
+endsnippet
+
+snippet xfcheck "xf checkbox input" b
+<li>
+	<label
+		for="ctrl_${1:name}"><input
+		type="checkbox"
+		name="page_$1"
+		value="1" 
+		id="ctrl_$1" 
+		${4:checked}
+	> ${2:The Input's Description}
+	</label>
+
+	<p class="hint">${3:Some meaningful help text was meant to go here}</p>
+
+</li>
+
+endsnippet
