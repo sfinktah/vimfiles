@@ -13,3 +13,4 @@ tern_for_vim
 *.7z
 *.tgz
 .hg
+bundle.snips
