@@ -29,9 +29,9 @@ snippet keys "Object.keys"
 Object.keys($1)
 endsnippet
 
-snippet isobject "(typeof .. object)" w
-(typeof $1 === 'function' || typeof $1 === 'object' && !!$1)
-endsnippet
+# snippet isobject "(typeof .. object)" w
+# (typeof $1 === 'function' || typeof $1 === 'object' && !!$1)
+# endsnippet
 
 snippet p "Promise" !w
 new Promise(function(resolve, reject){

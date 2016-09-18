@@ -178,10 +178,11 @@ set ch=2                " command height = 2
 set cindent
 set encoding=utf-8
 set expandtab
-set ffs=dos,unix
-" set foldmethod=marker
-set foldmethod=syntax " http://stackoverflow.com/questions/4789605/how-do-i-enable-automatic-folds-in-vim
-set foldlevelstart=1
+set ffs=unix,dos
+set foldmethod=marker
+set foldlevel=99
+" set foldmethod=syntax " http://stackoverflow.com/questions/4789605/how-do-i-enable-automatic-folds-in-vim
+" set foldlevelstart=1
 set formatoptions=tcroqn1
 set hidden
 set history=1000        " keep 50 lines of command line history
