@@ -4,8 +4,10 @@
 " VUNDLE
 " ------------------------------------------------------------------
 set nocompatible              " be iMproved, required
+" set t_Co=256
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
+let g:loaded_youcompleteme = 1
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 " Plugin 'Valloric/YouCompleteMe'
@@ -28,66 +30,88 @@ Plugin 'gmarik/Vundle.vim'
 " Plugin 'majutsushi/tagbar'
 " Plugin 'nkzawa/js-inspector.vim'
 " Plugin 'bigfish/vim-js-context-coloring'
-Plugin 'https://github.com/armyofevilrobots/vim-openscad'
-Plugin 'https://github.com/bigfish/vim-js-context-coloring'
-Plugin 'https://github.com/chrismar035/vim-guitar'
-Plugin 'https://github.com/gcmt/taboo.vim'
-Plugin 'https://github.com/glts/vim-textobj-comment'
-Plugin 'https://github.com/groenewege/vim-less'
-Plugin 'https://github.com/guns/xterm-color-table.vim'
-Plugin 'https://github.com/honza/vim-snippets'
-Plugin 'https://github.com/jakar/vim-json'
-Plugin 'https://github.com/jelera/vim-javascript-syntax'
-Plugin 'https://github.com/jplaut/vim-arduino-ino'
-Plugin 'https://github.com/junegunn/vim-easy-align'
-Plugin 'https://github.com/kana/vim-textobj-user'
-Plugin 'https://github.com/kchmck/vim-coffee-script'
-Plugin 'https://github.com/ldx/vim-indentfinder'
-Plugin 'https://github.com/leafgarland/typescript-vim'
-Plugin 'https://github.com/lilydjwg/colorizer'
-Plugin 'https://github.com/Lokaltog/vim-distinguished'
-Plugin 'https://github.com/majutsushi/tagbar'
-Plugin 'https://github.com/marijnh/tern_for_vim'
-Plugin 'https://github.com/mattn/emmet-vim'
-Plugin 'https://github.com/mhinz/vim-hugefile'
-Plugin 'https://github.com/nkzawa/js-inspector.vim'
-Plugin 'https://github.com/pangloss/vim-javascript'
-Plugin 'https://github.com/rstacruz/sparkup'
-Plugin 'https://github.com/scrooloose/nerdtree'
-Plugin 'https://github.com/scrooloose/syntastic'
-Plugin 'https://github.com/sfinktah/actionscript-vim-bundle'
-Plugin 'https://github.com/sfinktah/javascript-libraries-syntax.vim'
-Plugin 'https://github.com/sfinktah/nerdcommenter'
-Plugin 'https://github.com/sfinktah/Rainbow-Parenthsis-Bundle'
-Plugin 'https://github.com/sfinktah/ultisnips'
-Plugin 'https://github.com/sfinktah/vim-colors-solarized'
-Plugin 'https://github.com/sfinktah/vimwiki'
-Plugin 'https://github.com/sfinktah/XML-Folding'
-Plugin 'https://github.com/sfinktah/YouCompleteMe'
-Plugin 'https://github.com/Shougo/unite.vim'
-Plugin 'https://github.com/stephpy/vim-yaml'
-Plugin 'https://github.com/tomasr/molokai'
-Plugin 'https://github.com/tpope/vim-repeat'
-Plugin 'https://github.com/tpope/vim-surround'
-Plugin 'https://github.com/vim-pandoc/vim-markdownfootnotes'
-Plugin 'https://github.com/vim-scripts/ColorSchemeEditor'
-Plugin 'https://github.com/w0ng/vim-hybrid'
-Plugin 'https://github.com/wavded/vim-stylus'
+Plugin 'armyofevilrobots/vim-openscad'
+Plugin 'bigfish/vim-js-context-coloring'
+Plugin 'chrismar035/vim-guitar'
+Plugin 'gcmt/taboo.vim'
+Plugin 'glts/vim-textobj-comment'
+Plugin 'groenewege/vim-less'
+Plugin 'guns/xterm-color-table.vim'
+Plugin 'honza/vim-snippets'
+Plugin 'jakar/vim-json'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'jplaut/vim-arduino-ino'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'kana/vim-textobj-user'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'ldx/vim-indentfinder'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'lilydjwg/colorizer'
+Plugin 'Lokaltog/vim-distinguished'
+" Plugin 'majutsushi/tagbar'
+Plugin 'marijnh/tern_for_vim'
+" Plugin 'mattn/emmet-vim'
+Plugin 'mhinz/vim-hugefile'
+Plugin 'nkzawa/js-inspector.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'rstacruz/sparkup'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'sfinktah/actionscript-vim-bundle'
+Plugin 'sfinktah/javascript-libraries-syntax.vim'
+Plugin 'sfinktah/nerdcommenter'
+Plugin 'sfinktah/Rainbow-Parenthsis-Bundle'
+Plugin 'sfinktah/ultisnips'
+Plugin 'sfinktah/vim-colors-solarized'
+Plugin 'sfinktah/vimwiki'
+Plugin 'sfinktah/XML-Folding'
+Plugin 'triglav/vim-visual-increment'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/unite.vim'
+Plugin 'stephpy/vim-yaml'
+Plugin 'tomasr/molokai'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-pandoc/vim-markdownfootnotes'
+Plugin 'vim-scripts/ColorSchemeEditor'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'wavded/vim-stylus'
 
 
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-" let g:UltiSnipsExpandTrigger="<c-space>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" ----- end: ultisnips ---
 
 call vundle#end()
-set t_Co=256
-filetype plugin indent on     " required!
 " ------------------------------------------------------------------
 
 execute pathogen#infect()
+filetype off
+filetype plugin indent on     " required!
+
+""" ULTISNIPS
+" Trigger configuration. Do not use <tab> if you use 
+"         https://github.com/Valloric/YouCompleteMe.
+" ----- end: ultisnips ---
+" https://github.com/Valloric/YouCompleteMe/issues/36
+let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsExpandTrigger="<c-space>"
+" let g:UltiSnipsExpandTrigger="<c-y>"
+let g:UltiSnipsExpandTrigger="<Tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsJumpBackwardTrigger="<F8>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpForwardTrigger="<c-n>"
+" let g:UltiSnipsJumpForwardTrigger="<F7>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsListSnippets="<c-y>"
+let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "snips"]
+
+""" END ULTISNIPS
+
+
 hi NonText cterm=NONE ctermfg=NONE
 " imap <C-o> :set paste<CR>:exe PhpDoc()<CR>:set nopaste<CR>i
 inoremap <F1> <ESC>
@@ -99,27 +123,17 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_WinWidth = 40
 let coffee_make_options = '--bare'
 let coffee_watch_vert = 1
+let g:used_javascript_libs = 'underscore,lodash,jquery,d3'
 let g:colorizer_startup = 0
 let g:colorizer_maxlines = 1000
 let g:CSApprox_verbose_level = 0
 let g:DoxygenToolkit_briefTag_funcName = "yes"
-let g:UltiSnipsEditSplit="vertical"
-" let g:UltiSnipsExpandTrigger="<c-y>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-p>"
-" let g:UltiSnipsJumpForwardTrigger="<c-n>"
-" let g:UltiSnipsExpandTrigger = "<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-
-let g:UltiSnipsExpandTrigger="<Tab>" " https://github.com/Valloric/YouCompleteMe/issues/36
-let g:UltiSnipsJumpForwardTrigger="<Tab>"                                           
-let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
 
 let g:backup_directory = ".backups"
 let g:backup_purge = 100
 let g:rehash256 = 1
-let g:used_javascript_libs = 'jquery,underscore'
 let g:writebackup_BackupDir = './.~'
 let g:js_context_colors_enabled = 0
 let g:python_host_prog = '/usr/bin/python2.7'
@@ -156,6 +170,7 @@ nmap <leader>ml :$put =ModelineStub()<CR>
 nmap <silent> <leader>s :set nolist!<CR>
 nnoremap ' `
 nnoremap * :'<,'>s/\C\<<c-r><c-w>\>//g<c-f>$F/i
+nnoremap & :%s/\C\<<c-r><c-w>\>//g<c-f>$F/i
 nnoremap ; :
 nnoremap <C-h> <C-w>h nnoremap <C-j> <C-w>j nnoremap <C-k> <C-w>k nnoremap <C-l> <C-w>l
 nnoremap <F1> <ESC>
@@ -183,7 +198,87 @@ set foldmethod=marker
 set foldlevel=99
 " set foldmethod=syntax " http://stackoverflow.com/questions/4789605/how-do-i-enable-automatic-folds-in-vim
 " set foldlevelstart=1
-set formatoptions=tcroqn1
+set formatlistpat=^\\s*\\w\\+[\\]:.)}\\t\ ]\\s*
+set formatoptions=1cjloqr
+" set formatoptions+=an
+" 
+" a	 Automatic formatting of paragraphs.  Every time text is inserted or 
+"      deleted the paragraph will be reformatted.  See |auto-format|.  When 
+"      the 'c' flag is present this only happens for recognized comments.
+"
+" w	 Trailing white space indicates a paragraph continues in the next line.  
+"      A line that ends in a non-white character ends a paragraph.
+"
+" 1    Don't break a line after a one-letter word.  It's broken before it
+"      instead (if possible).
+" 
+" c    Auto-wrap comments using textwidth, inserting the current comment
+"      leader automatically.
+" 
+" j    Where it makes sense, remove a comment leader when joining lines.  For
+"      example, joining:
+"
+" l    Long lines are not broken in insert mode: When a line was longer than
+"      'textwidth' when the insert command started, Vim does not automatically
+"      format it.
+" 
+" n    When formatting text, recognize numbered lists.  This actually uses the
+"      'formatlistpat' option, thus any kind of list can be used.  The indent
+"      of the text after the number is used for the next line.  The default is
+"      to find a number, optionally followed by '.', ':', ')', ']' or '}'.
+"      Note that 'autoindent' must be set too.  Doesn't work well together
+"      with "2".  Example: > 1. the first item wraps 2. the second item
+" 
+" o    Automatically insert the current comment leader after hitting 'o' or
+"      'O' in Normal mode.
+" 
+" q    Allow formatting of comments with "gq".  Note that formatting will not
+"      change blank lines or lines containing only the comment leader.  A new
+"      paragraph starts after such a line, or when the comment leader changes.
+" 
+" r    Automatically insert the current comment leader after hitting <Enter>
+"      in Insert mode.
+" 
+" 
+" 
+" t Auto-wrap text using textwidth
+" n When formatting text, recognize numbered lists.  This actually uses
+"   the 'formatlistpat' option, thus any kind of list can be used.  The
+"   indent of the text after the number is used for the next line.  The
+"   default is to find a number, optionally followed by '.', ':', ')',
+"   ']' or '}'.  Note that 'autoindent' must be set too.  Doesn't work
+"   well together with "2".
+"   Example: >
+"     1. the first item
+"        wraps
+"     2. the second item
+" 2 When formatting text, use the indent of the second line of a paragraph
+"   for the rest of the paragraph, instead of the indent of the first
+"   line.  This supports paragraphs in which the first line has a
+"   different indent than the rest.  Note that 'autoindent' must be set
+"   too.  Example: >
+"       first line of a paragraph
+"     second line of the same paragraph
+"     third line.
+" < This also works inside comments, ignoring the comment leader.
+" v Vi-compatible auto-wrapping in insert mode: Only break a line at a
+"   blank that you have entered during the current insert command.  (Note:
+"   this is not 100% Vi compatible.  Vi has some "unexpected features" or
+"   bugs in this area.  It uses the screen column instead of the line
+"   column.)
+" b Like 'v', but only auto-wrap if you enter a blank at or before
+"   the wrap margin.  If the line was longer than 'textwidth' when you
+"   started the insert, or you do not enter a blank in the insert before
+"   reaching 'textwidth', Vim does not perform auto-wrapping.
+" l Long lines are not broken in insert mode: When a line was longer than
+"   'textwidth' when the insert command started, Vim does not
+"   automatically format it.
+" m Also break at a multi-byte character above 255.  This is useful for
+"   Asian text where every character is a word on its own.
+" M When joining lines, don't insert a space before or after a multi-byte
+"   character.  Overrules the 'B' flag.
+" B When joining lines, don't insert a space between two multi-byte
+"   characters.  Overruled by the 'M' flag.
 set hidden
 set history=1000        " keep 50 lines of command line history
 set hlsearch
@@ -242,7 +337,7 @@ else
    " source ~/.vim/php-doc.vim
    source ~/.vim/writebackup.vim
    source ~/.vim/writebackupVersionControl.vim
-   " source ~/.vim/zynga.vim
+   source ~/.vim/zynga.vim
    source ~/.vim/ulti.vim
 endif
 syntax enable
@@ -346,7 +441,6 @@ if has("autocmd")
 	autocmd FileType coffee compiler coffee
 	autocmd FileType coffee setl ts=2 sw=2 sts=2 et
 	autocmd FileType javascript setl ts=4 sw=4 sts=4 et
-	autocmd FileType javascript setl ts=4 sw=4 sts=4 et
    autocmd FileType asm setl ts=8 sw=0 sts=0 noet syntax=nasm
    autocmd FileType javascript nmap <buffer> <LocalLeader>* <Plug>JsInspectorSearchForward
 	autocmd FileType d set ts=4 sw=2 sts=4
@@ -414,4 +508,34 @@ au InsertLeave * set nopaste
 " vim-jade – jade syntax support for vim
 " tabular – a formatting tool, allows me to align my = signs
 " command-t – a quick search/lookup/open tool for files in my project
+"
+
+" Synastic Settings from http://usevim.com/2016/03/07/linting/
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_c_compiler_options = '-std=c++1z'
+let g:syntastic_cpp_compiler_options = '-std=c++1z'
+
+let g:syntastic_error_symbol = '!'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+nmap <C-n> :lnext<CR>
+nmap <C-p> :lprev<CR>
 " vim: set ts=3 sts=0 sw=0 et:
+"

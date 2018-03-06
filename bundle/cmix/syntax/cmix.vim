@@ -24,7 +24,8 @@ endif
   " unlet b:current_syntax
 " endif
 
-syn region cBracket     transparent start='\[\|<::\@!' end=']\|:>' contains=ALLBUT,nasmStdInstruction,cIdaStack,cIdaHexDump
+" syn region cBracket     transparent start='\[\|<::\@!' end=']\|:>' 
+"     contains=ALLBUT,nasmStdInstruction,cIdaStack,cIdaHexDump
 
 syn sync clear
 
@@ -219,7 +220,7 @@ syn keyword cMixRegisterSP rsp    esp  sp   spl
 " r14    r14d r14w r14b
 " r15    r15d r15w r15b
 
-syn match cUpperCamelCase containedin=cBracket "\C\<\([A-Z][a-z]\+\)\+\w*"
+syn match cUpperCamelCase "\C\<\([A-Z][a-z]\+\)\+\w*"
 syn match win32api containedin=cBracket "\C\<\(Get\|Set\|File\|Crypt\|Create\|Info\|Window\|Enum\|Cert\|Key\|Printer\|Name\|To\|Reg\|Console\|Message\|Card\|Is\|System\|Add\|S\|Win\|Open\|Delete\|Context\|Find\|String\|Query\|Text\|Menu\|Store\|Cred\|Snmp\|Process\|Object\|Char\|W\|Net\|Certificate\|Service\|From\|Write\|Event\|Windows\|Resource\|Rect\|User\|Register\|Meta\|Load\|Evt\|Data\|Transacted\|Default\|Change\|Time\|Font\|Profile\|Thread\|Status\|Free\|Device\|Config\|Rgn\|Input\|Display\|Close\|UI\|Verify\|Pointer\|Item\|Http\|Dlg\|Comm\|Value\|Read\|Dns\|Notification\|Information\|Format\|Directory\|Point\|Path\|Msg\|In\|Global\|Color\|Class\|Mode\|Log\|Driver\|Copy\|Usb\|State\|Private\|List\|Handle\|Clipboard\|Wlx\|DC\|Cursor\|Box\|Type\|Processor\|Print\|Pipe\|Id\|For\|CTL\|Connection\|wgl\|Size\|Remove\|OID\|Indirect\|Volume\|Update\|Memory\|Long\|Hash\|Enh\|Cache\|Buffer\|Unregister\|Provider\|Param\|Palette\|Notify\|Map\|Dialog\|CRL\|Atom\|Virtual\|Lookup\|Local\|Job\|Icon\|Draw\|Current\|Send\|Raw\|Ptr\|Property\|Output\|Next\|Locale\|End\|Cancel\|By\|Url\|Shutdown\|Section\|Scroll\|Reader\|Pos\|Language\|Group\|Function\|Desktop\|Credentials\|Check\|Valid\|Touch\|Start\|Properties\|Proc\|Physical\|Numa\|First\|Fill\|Ext\|Ctx\|Chain\|And\|Act\|Version\|Timer\|Str\|Select\|Record\|Policy\|Named\|Monitor\|Layout\|Gdi\|Frame\|Duplicate\|Brush\|Bits\|Bitmap\|Alloc\|Wait\|Sign\|Settings\|Screen\|Move\|Keyboard\|Hook\|Formats\|Firmware\|Error\|Count\|Computer\|Compare\|Wow64\|Signature\|Security\|Power\|Poly\|Page\|Org\|Of\|Lock\|Languages\|Extent\|Clip\|Character\|Calendar\|Table\|Safer\|Response\|Request\|Replace\|Public\|Port\|Pen\|Out\|Oem\|Mount\|Mask\|Length\|Initialize\|ID\|ICM\|Export\|Environment\|Encrypted\|Encoded\|Destroy\|Def\|Ctrl\|Callback\|Blt\|Bad\|Audit\|Application\|Alarm\|Wintrust\|Ver\|Variable\|Use\|Usage\|Tape\|Station\|Server\|Pixel\|Number\|Node\|Module\|IME\|History\|Form\|Ex\|Entry\|Enable\|Dir\|Credential\|Control\|Connect\|Caret\|Call\|Buff\|Alias\|Account\|Working\|With\|View\|Unicode\|Translate\|Title\|Space\|Session\|Save\|Router\|Restore\|Release\|Prov\|Privilege\|Pages\|Mouse\|Mem\|Mapping\|Link\|Level\|Last\|Image\|Flush\|Fiber\|Doc\|Date\|CP\|Client\|Child\|Backup\|Async\|App\|Active\|Accelerator\|32\|Abort\)\+\(A\|W\|Ex\|s\)*\>"
 
 syn case ignore
@@ -252,6 +253,7 @@ syn match       cNumber         display contained "\x\+\(u\=l\{0,2}\|ll\=u\)h\>"
 syn match       cMixUserLabel            "\C \<[A-Z0-9_]\+\>"
 " In IDA's case, there will be a space before the label
 syn match       cMixAutoLabel            "\C\<[a-z]\+_[A-F0-9]\+\>"
+syn match cStackVar "\C\<\(var_\x\+\)"
 " syn match       cComment                 ";.*$"
 
 syn match       cMixIdaAsmStart "^\S\+:\x*"        nextgroup=cIdaStack   skipwhite 
@@ -305,6 +307,7 @@ if version >= 508 || !exists("did_cmix_syn_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
+  HiLink cStackVar               cMixAsm
   HiLink cUpperCamelCase         cMixLabel
   HiLink cMixLabel               DiffDelete
   HiLink cMixAsm                 Special

@@ -23,3 +23,27 @@ import autoversion
 autoversion.update_file(__file__)
 $0
 endsnippet
+
+snippet printa "print address" b
+print("0x%x: ${1:message}: ${2:details}" % (${3:ea}))
+endsnippet
+
+snippet throwa "throw address" b
+raise("0x%x: ${1:message}: ${2:details}" % (${3:ea}))
+endsnippet
+
+snippet	0x "0x%x" w
+0x%x
+endsnippet
+
+# snippet /\$\$(\d+)/ "match.group" r
+# \`!p snip.rv = match.group(`!p snip.rv = match.group(1)`)\`
+# endsnippet
+
+snippet /\(([a-zA-Z0-9_]+)/ "wrap'n'brack" r
+(`!p snip.rv = match.group(1)`, ${1})
+endsnippet
+
+snippet /([a-zA-Z_][a-zA-Z0-9_, ]+[a-zA-Z0-9_])\)/ "wrap'n'brack" r
+(`!p snip.rv = match.group(1)`)
+endsnippet

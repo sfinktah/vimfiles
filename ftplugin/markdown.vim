@@ -19,9 +19,9 @@ else
   let b:undo_ftplugin = "setl cms< com< fo< flp<"
 endif
 
-set columns=80
-autocmd VimResized * if (&columns > 80) | set columns=80 | endif
-set wrap
-set linebreak
+" # set columns=80
+" # autocmd VimResized * if (&columns > 80) | set columns=80 | endif
+" # set wrap
+" # set linebreak
 
 " vim:set sw=2:

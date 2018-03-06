@@ -6,3 +6,7 @@ public static ${2:Type} ${1:PropertyName}
 	set { _$1 = value; }
 }
 endsnippet
+
+snippet log "Console.WriteLine('x', x)"
+Console.WriteLine("${1:varname} {0}", $1);
+endsnippet

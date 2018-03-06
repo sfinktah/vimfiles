@@ -1,4 +1,16 @@
 global !p
+def get_some_value():
+    return 'xxx'
+
+def jump_if_value_equals(expected):
+    if len(snip.tabstops) <= 1:
+        return
+
+    if snip.tabstops[1].current_text == expected:
+        if snip.tabstop == 1:
+            if snip.jump_direction == 1:
+                vim.command('call feedkeys("\<Tab>")')
+
 def fraction(a, b):
     try:
         return "%.1f" % (float(a)/float(b))
@@ -6,8 +18,16 @@ def fraction(a, b):
         return "ERR"
 endglobal
 
+post_jump "jump_if_value_equals('xxx')"
+snippet iff "if" b
+if ${1:`!p snip.rv = get_some_value()`} {
+    $2
+}
+endsnippet
+
 snippet dce "document.createElement" w
-document.createElement('$1')
+${3:var} ${2:elem} = document.createElement('${1:div}');
+${4:$2.}$0
 endsnippet
 
 snippet 75wrds "Log a 750words.com session" b
@@ -17,8 +37,8 @@ snip.rv = fraction(t[1], t[2])
 endsnippet
 
 
-snippet lazylog "lazy log"
-log('$1', $1);
+snippet log "log('a, b, c', a, b, c)"
+console.${3:info}("${2:Laz-e-log}: $1", $1);
 endsnippet
 
 snippet isarray "Array.isArray"
@@ -29,18 +49,16 @@ snippet keys "Object.keys"
 Object.keys($1)
 endsnippet
 
-# snippet isobject "(typeof .. object)" w
-# (typeof $1 === 'function' || typeof $1 === 'object' && !!$1)
-# endsnippet
-
 snippet p "Promise" !w
 new Promise(function(resolve, reject){
 ${1}
 });
 endsnippet
 
-snippet /\.e/ ".forEach(v,k..)" r
-.forEach (value, index, array) ->
+snippet /\.(for)?[eE](ach)?/ ".forEach(v,k,a)" r
+.forEach(function(${1:value, index, array}) {
+    $0
+});
 endsnippet
 
 snippet /(\w+)\.ea/ "_.each(..)" r
@@ -49,11 +67,12 @@ _.each(`!p snip.rv = match.group(1)`, function(value, key) {
 }
 endsnippet
 
-snippet arguments "Description" w
-var args = new Array(arguments.length);
-for (var i=0; i<arguments.length; i++) args[i] = arguments[i];
+snippet arguments "efficiently convert arguments to array" w
+var _argLen = arguments.length,
+    ${1:args} = new Array(_argLen);
+while (_argLen--)
+    $1[_argLen] = arguments[_argLen];
 endsnippet
-
 
 snippet .attr "setAttribute(k,v)"
 .setAttribute('$1', $2)
@@ -64,7 +83,6 @@ console.log(("object"==typeof self?self:this).constructor.name  //jshint ignore:
 +"::"+function e(l){return e.caller instanceof Object?e.caller.name:l}()  //jshint ignore:line
 +" $1");  //jshint ignore:line
 endsnippet
-
 
 snippet umd "umd loader"
 // https://github.com/umdjs/umd/blob/master/returnExports.js
@@ -90,17 +108,12 @@ snippet umd "umd loader"
 }));
 endsnippet
 
-snippet /[$][(]["'][#]/ "document.getElementById" r
-document.getElementById("$1")
+snippet /[$][(]["']/ "document.querySelector" ri
+document.querySelector("$1")
 endsnippet
 
 snippet toarray "[].slice" w
 Array.prototype.slice.call($1)
-endsnippet
-
-snippet "var args" "var args=[].slice(arguments)" b
-var args = Array.prototype.slice.call(arguments);
-
 endsnippet
 
 snippet args[] "[].slice(arguments)" w
@@ -109,49 +122,35 @@ endsnippet
 
 snippet /extends?/ "class x extends y" r
 /**
- * @constructor
+ * @class
  * @extends ${2:superclass}
- * @see [Classical inheritance with Object.create](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create)
+ * See: [Classical inheritance with Object.create](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create)
+ * See: [JSDoc block level tags](http://usejsdoc.org/#block-tags)
  */
 function ${1:classname}() {
     $2.apply(this, arguments);
 }
 
-//
 $1.prototype = Object.create($2.prototype);
 $1.prototype.constructor = $1;
 $1.__super__ = $2.prototype;
 // mixin($2, OtherSuperClass.prototype); // mixin
 
 $1.prototype.$3 = function($4) {
-
+    $0
 endsnippet
 
 snippet define "define(f(r,e,m){" b
 define(
     function(require, exports, module) {
         "use strict";
-        // http://jshint.com/docs/options/
-        // jshint undef:true
-        // jshint unused:true
-        // jshint strict:true
-        // jshint eqnull:true
 
-        var VUtils = require('Vizicks/VUtils');
-        var ${1:Famous} = require('${2:famous}');
+        var ${1:_} = require('${2:dev/underscore}');
 
 endsnippet
 
-snippet t
+snippet visualTest
 <tag>${VISUAL:inside text/should/is/g}</tag>
-endsnippet
-
-snippet bash "bash declare -p"
-`declare -p`
-endsnippet
-
-snippet per. "PointerEventRouter" i
-PointerEventRouter.
 endsnippet
 
 snippet consolesafe "catch console.log" w
@@ -164,14 +163,6 @@ snip.rv = json.dumps(t[2])`);
 };
 endsnippet
 
-snippet wow
-${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
-endsnippet
-
-snippet wow2
-${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
-endsnippet
-
 snippet /\.pr(o)?/ "prototype." r
 .prototype.${1:methodName} = function(${2:object}) {
     $3
@@ -179,18 +170,14 @@ snippet /\.pr(o)?/ "prototype." r
 
 endsnippet
 
-snippet assert "VUtils.assert" w
-VUtils.assert(${1:istrue}, "${2:Assertion Failed}");
+snippet assert "assert" w
+assert(${1:truthy}, "${2:Assertion Failed: $1}");
 $3
 endsnippet
 
 snippet refute "VUtils.refute" w
 VUtils.refute(${1:isfalse}, "${2:Negative Assertion Failed}");
 $3
-endsnippet
-
-snippet oiu "oEvent, iEvent, cTarget, oTarget" w
-oEvent, iEvent, cTarget, oTarget
 endsnippet
 
 snippet Array.equals "Array.equals / every" w
@@ -201,15 +188,21 @@ snippet Array.equals "Array.equals / every" w
 })(${1:array1}, ${2:array2})
 endsnippet
 
-snippet nreq "x = require('x');" b
-${1:fs} = require('$1');
+snippet /req(uire)?/ "x = require('x');" r
+var ${1:fs} = require('${2:./$1}');
+$0
+endsnippet
+
+snippet /def(ault)?/ "default param" r
+// optional argument \`$1\` defaults to \`$2\`
+${1:argname} = ($1 != null ? $1 : ${2:default});
 endsnippet
 
 snippet rand "Math.floor(Math.random()*x)" w
 (Math.floor(Math.random()*${1:256}))
 endsnippet
 
-snippet lowercasestupid
+snippet lowercaseTest
 $1 `!p snip.rv=t[1][0:1].lower()`
 endsnippet
 
@@ -247,8 +240,228 @@ var $A = (function() {
 })();
 endsnippet
 
-snippet isString "isString" w
-(toString.call(${1:var}) === "[object String]")
+snippet /(\w+).prepend/ "...insertBefore" r
+`!p snip.rv = match.group(1)`.parentNode.insertBefore(${1:elem}, `!p snip.rv = match.group(1)`)
 endsnippet
 
+snippet /([\w.]+).bind/ "post-bind" r
+`!p snip.rv = match.group(1)` = `!p snip.rv = match.group(1)`.bind(${1:this});$0
+endsnippet
+
+snippet /for (\w+) in ([''""\w.[\]()]+)/ "coffeescript for" r
+for (var `!p snip.rv = match.group(1)`, ${3:k} = 0, ${4:len} = `!p snip.rv = match.group(2)`.length; $3 < $4; ++$3) {
+    `!p snip.rv = match.group(1)` = `!p snip.rv = match.group(2)`[$3];
+    $0
+}
+endsnippet
+
+snippet /for (\w+), (\w+) in ([\w.[\]()]+)/ "coffeescript for" r
+for (var `!p snip.rv = match.group(1)`, `!p snip.rv = match.group(2)` = 0, ${4:len} = `!p snip.rv = match.group(1)`.length; `!p snip.rv = match.group(2)` < $4; ++`!p snip.rv = match.group(2)`) {
+    `!p snip.rv = match.group(1)` = `!p snip.rv = match.group(3)`[`!p snip.rv = match.group(2)`];
+    $0
+}
+endsnippet
+
+# var key, value,
+# hasProp = {}.hasOwnProperty;
+# 
+# for own key, value of object
+# for (key in object) {
+#   if (!hasProp.call(object, key)) continue;
+#   value = object[key];
+#   x;
+# }
+# 
+# for key, value of object
+# for (key in object) {
+#   value = object[key];
+#   x;
+# }
+# 
+# for key of object
+# for (key in object) {
+#   x;
+# }
+#
+# 1: "own " ?
+# 2: "key"
+# 3: ", " ?
+# 4: "value" ?
+# 5: "object"
+snippet /for (own )?(\w+)(, )?(\w+)? of ([\w.[\]()]+)/ "coffeescript for-of" r
+for (var `!p snip.rv = match.group(2)` in `!p snip.rv = match.group(5)`) {
+    `!p if match.group(1): # http://eslint.org/docs/rules/no-prototype-builtins
+    snip.rv = "if (!{}.hasOwnProperty.call(" + match.group(5) + ", " + match.group(2) + ")) continue;"`
+    `!p if match.group(4):
+    snip.rv = "var " + match.group(4) + " = " + match.group(5) + "[" + match.group(2)  + "];"`
+}
+endsnippet
+
+# snip.basename:
+# The current filename with the extension removed.
+
+snippet /@(\w+): (.*) ->/ "static" rb
+/**
+ * $2
+ *
+ * @returns {undefined}
+ */
+${1:`!p snip.rv = snip.basename`}.${2:`!p snip.rv = match.group(1)`} = function`!p snip.rv = match.group(2)` {
+    $0
+};
+endsnippet
+
+snippet /(\w+): (.*) ->/ "coffeescript" rw
+/**
+ * $2
+ *
+ * @returns {undefined}
+ */
+${1:`!p snip.rv = snip.basename`}.prototype.${2:`!p snip.rv = match.group(1)`} = function`!p snip.rv = match.group(2)` {
+    $0
+};
+endsnippet
+
+snippet /(\w+): ->/ "coffeescript" r
+/**
+ * $2
+ *
+ * @returns {undefined}
+ */
+${1:`!p snip.rv = snip.basename`}.prototype.${2:`!p snip.rv = match.group(1)`} = function() {
+    $0
+};
+
+endsnippet
+
+snippet /@([\w.[\]()]+)/ "coffeescript" rw
+this.`!p snip.rv = match.group(1)`$0
+endsnippet
+
+snippet /if ([^(]+)/ "coffee if" rb
+if (`!p snip.rv = match.group(1)`) {
+    $0
+}
+endsnippet
+
+snippet "^a" "package" rbA
+auto ${1:main}
+endsnippet
+
+snippet "^pack" "package" rbA
+package ${1:main}
+endsnippet
+
+snippet "([\w.[\]()]+)\.(\w+)\)" "Parenthesis (postfix)" r
+`!p snip.rv = match.group(2)`(`!p snip.rv = match.group(1)`)$0
+endsnippet
+
+snippet / \.array/ "(array[0], array[1])" wr
+(${1:array}[0], $1[1])$0
+endsnippet
+
+snippet /is([A-Z]\w+)/ "isAnything" r
+(toString.call(${1:var}) === "[object ${2:`!p snip.rv = match.group(1)`}]")
+endsnippet
+
+snippet esignore "eslint-disable" w
+// eslint-disable-${1:next-}line ${2:no-unused-vars} $0
+endsnippet
+
+snippet eslint "eslint-disable" w
+// eslint-disable-${1:next-}line ${2:no-unused-vars} $0
+endsnippet
+
+snippet bindfn "coffeescript =>" w
+(function(_this) {
+    return function(${1:a1, a2}) {
+        $0
+    };
+})(this)
+endsnippet
+
+snippet /(\w+):/ "prop: prop," r
+`!p snip.rv = match.group(1)`: `!p snip.rv = match.group(1)`,
+$0
+endsnippet
+
+snippet strict "use strict" b
+"use strict";
+endsnippet
+
+snippet clamp "ternary clamp" w
+(
+    ${1:number} > ${3:maximum} ? $3 :
+    $1 < ${2:minimum} ? $2 :
+    $1
+)
+endsnippet
+
+snippet between "ternary between" w
+(
+    ${1:number} > ${3:maximum} ? 0 :
+    $1 < ${2:minimum} ? 1 :
+    0
+)
+endsnippet
+
+snippet forwhile "for as while" b
+// for (${1:i} = ${2:0}; $1 < ${4:$3.length}; $1++) ;
+// for ($1 = $3 - 1; $1 >= $2; $1--) ;
+var $1 = $4;
+while ($1-- > $2) {
+    ${3:array}[$1];$0
+}
+endsnippet
+
+snippet forwhile2 "for as while 2" b
+// for (${1:setup}; ${2:condition}; ${3:advance}) ${4:action};
+$1;
+while ($2) {
+  $4;
+  $3;
+}
+endsnippet
+
+snippet /(\w+) =>/ "es6 =>" r
+(function(`!p snip.rv = match.group(1)`) {
+    return ${1:`!p snip.rv = match.group(1)`};
+})$0
+endsnippet
+
+snippet /\(([\w, ]+)\) =>/ "es6 () =>" r
+(function(`!p snip.rv = match.group(1)`) {
+    return ${1:`!p snip.rv = match.group(1)`};
+})$0
+endsnippet
+
+snippet breadth "breadth-first traversal" b
+function traverse(object) {
+
+    if (object.possibleMoves) {
+        _.each(object.possibleMoves, function(possibleMove) {
+             traverse(possibleMove);
+        });
+    }
+}
+
+// For a breadth-first search, try something like this. It doesn't use 
+//     recursion, but instead iterates over a growing queue.
+
+function traverse(object) {
+    var queue = [],
+        next = object;
+    while (next) {
+        if (next.possibleMoves) {
+            _.each(next.possibleMoves, function(possibleMove) {
+                queue.push(possibleMove);
+            });
+        }
+        next = queue.shift();
+    }
+}
+endsnippet
+
+# http://stackoverflow.com/questions/28972221/ultisnips-create-argument-list-with-placeholders
+# https://answers.launchpad.net/ultisnips/+question/201889
 

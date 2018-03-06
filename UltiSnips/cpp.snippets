@@ -20,3 +20,93 @@ public:
 	$1 ${2:name}() const { return ${3:m_$2}; }  // Getter
 	void $2(${1:type} v) { $3 = v; }            // Setter
 endsnippet
+
+snippet prop "property template" b
+private:
+	$1 $3;
+public:
+	$1 ${4:get_$2}() const { return ${3:_$2}; }  // Getter
+	void ${5:set_$2}(${1:type} _) { $3 = _; }            // Setter
+	__declspec(property(get = $4, put = $5)) $1 ${2:name};
+endsnippet
+
+snippet DEBUG_OUT "DEBUG_OUT" b
+DEBUG_OUT_A("${1:bytes_read}: %i", $1);
+endsnippet
+
+snippet Hook_function "Hook Function" b
+#ifdef 0
+/ HOOK FOR: ${2:HookedFunction}
+/ PATTERN : ${1:PATTERN}
+/ RETURNS : ${3:PVOID}
+/ ARGNAMES: ${4:a1, a2}
+/ ARGTYPES: ${5:$4}
+#endif
+void Hook_$2();
+
+typedef $3(*$2_t)($5);
+$2_t ORIG_$2 = 0;
+
+$3 MY_$2($5) {
+	$3 rv = ORIG_$2($4);
+	return rv;
+}
+
+void Hook_$2() {
+	auto pattern = Memory::pattern("$1");
+	void *void_location;
+	if (void_location = pattern.count(1).get(0).get<void>(0)) {
+		LOG_DEBUG("Found pattern for %s: %p", "$2", Memory::normalise_base(void_location));
+		hook::Anything(void_location, (void *)&MY_$2, &ORIG_$2, "$2");
+	} else
+		LOG_WARN("Couldn't locate pattern for %s", "$2");
+}
+endsnippet
+
+snippet getset "GetterSetter Simple" b
+${4:virtual} ${3:int} ${1:function_name}() { return ${2:_$1}; }
+$4 void $1($3 _) { $2 = _; }
+$3 $2 = {};
+
+endsnippet
+
+snippet nullcheck2 "a->b->c nullcheck" 
+// $1->$2->$3
+// temp vars
+decltype($1->$2) ${4:ref}
+decltype($1->$2->$3) ${5:ref1}
+(($4 = $1->$2) != 0 ? ($5 = $4->$3) != 0 ? $5 : "(null)" : "(null)")
+endsnippet
+
+snippet scanfunc "_Scan function" b
+${5:type}& get${1:Thing}() {
+	static Memory::memBrick result;
+	
+	if (!result) {
+		result = ProtectScan("${2:? ? ? ?}");
+	}
+
+	if (result)
+		return result.offset(${3:3}).rip(${4:4}).as<$5&>();
+
+	LOG_FATAL("Couldn't find $1");
+	throw new std::exception("Couldn't find $1");
+}
+
+endsnippet
+
+snippet hooknative "Hook Native"
+NativeHandler ${1:UI_ADD_BLIP_FOR_PICKUP}_TRAMPOLINE = nullptr;
+//		&& HOOK_NATIVE(31 * $2, &$1, &$1_TRAMPOLINE)
+void $1(scrNativeCallContext *cxt) {
+	constexpr const uint64_t nativeHash = ${2:0x0};
+	if (!g_callingNative) genericBlipHook(cxt, nativeHash);
+	Patches::SafeInvoke(cxt, $1_TRAMPOLINE);
+}
+	
+endsnippet
+
+snippet bliphook "Blip Hook"
+void ${1:ADD_BLIP_FOR_ENTITY}(scrNativeCallContext    *cxt) { constexpr const uint64_t nativeHash = ${2:0x5CDE92C702A8FCE7}; if (!g_callingNative) genericBlipHook(cxt, nativeHash); Patches::SafeInvoke(cxt, $1_TRAMPOLINE);    genericBlipHookPost(cxt, nativeHash); }
+//		&& HOOK_NATIVE(31 * $2, &$1, &$1_TRAMPOLINE)
+endsnippet

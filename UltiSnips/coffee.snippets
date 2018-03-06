@@ -53,3 +53,22 @@ endsnippet
 snippet isString "isString" w
 (toString.call(${1:var}) == '[object String]')
 endsnippet
+
+snippet define "define module.exports" b
+define (require, exports, module) ->
+  'use strict'
+  # v = require "./script"
+  
+  return class ${1:classname}
+    $0
+
+  module.exports = {$1}
+endsnippet
+
+snippet require "var r = require(r)" b
+${1:module} = require './$1'
+endsnippet
+
+snippet log "log('a, b, c', a, b, c)"
+console.${3:info}("${2:Laz-e-log}: $1", $1)
+endsnippet
