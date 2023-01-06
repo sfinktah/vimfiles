@@ -32,3 +32,7 @@ do
 	${3:stuff}
 done
 endsnippet
+
+snippet /(?<=\W)strlen\(\$([^)]+)\)/ "strlen" rA
+${#`!p snip.rv = match.group(1)`}
+endsnippet

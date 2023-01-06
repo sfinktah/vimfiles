@@ -1,7 +1,0 @@
-syntax on
-set cursorline
-set cursorcolumn
-set encoding=utf-8
-set fencs=utf-8
-set background=dark
-set nomodeline

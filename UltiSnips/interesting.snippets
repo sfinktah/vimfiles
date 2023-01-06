@@ -1,0 +1,254 @@
+global !p
+def fraction(a, b):
+    try:
+        return "%.1f" % (float(a)/float(b))
+    except (ValueError, ZeroDivisionError):
+        return "ERR"
+endglobal
+
+snippet dce "document.createElement" w
+document.createElement('$1')
+endsnippet
+
+snippet 75wrds "Log a 750words.com session" b
+750words.com: ${1:750} words in ${2:20} minutes - `!p
+snip.rv = fraction(t[1], t[2])
+` wpm.
+endsnippet
+
+
+snippet lazylog "lazy log"
+log('$1', $1);
+endsnippet
+
+snippet isarray "Array.isArray"
+Array.isArray($1)
+endsnippet
+
+snippet keys "Object.keys"
+Object.keys($1)
+endsnippet
+
+# snippet isobject "(typeof .. object)" w
+# (typeof $1 === 'function' || typeof $1 === 'object' && !!$1)
+# endsnippet
+
+snippet p "Promise" !w
+new Promise(function(resolve, reject){
+${1}
+});
+endsnippet
+
+snippet /\.e/ ".forEach(v,k..)" r
+.forEach (value, index, array) ->
+endsnippet
+
+snippet /(\w+)\.ea/ "_.each(..)" r
+_.each(`!p snip.rv = match.group(1)`, function(value, key) {
+    $1
+}
+endsnippet
+
+snippet arguments "Description" w
+var args = new Array(arguments.length);
+for (var i=0; i<arguments.length; i++) args[i] = arguments[i];
+endsnippet
+
+
+snippet .attr "setAttribute(k,v)"
+.setAttribute('$1', $2)
+endsnippet
+
+snippet constructlog "console.log(self.constructor.name...)" w
+console.log(("object"==typeof self?self:this).constructor.name  //jshint ignore:line
++"::"+function e(l){return e.caller instanceof Object?e.caller.name:l}()  //jshint ignore:line
++" $1");  //jshint ignore:line
+endsnippet
+
+
+snippet umd "umd loader"
+// https://github.com/umdjs/umd/blob/master/returnExports.js
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.returnExports = factory();
+  }
+}(this, function () {
+	 ${1}
+    // Just return a value to define the module export.
+    // This example returns an object, but the module
+    // can return a function as the exported value.
+    return {};
+}));
+endsnippet
+
+snippet /[$][(]["'][#]/ "document.getElementById" r
+document.getElementById("$1")
+endsnippet
+
+snippet toarray "[].slice" w
+Array.prototype.slice.call($1)
+endsnippet
+
+snippet "var args" "var args=[].slice(arguments)" b
+var args = Array.prototype.slice.call(arguments);
+
+endsnippet
+
+snippet args[] "[].slice(arguments)" w
+Array.prototype.slice.call(arguments)
+endsnippet
+
+snippet /extends?/ "class x extends y" r
+/**
+ * @constructor
+ * @extends ${2:superclass}
+ * @see [Classical inheritance with Object.create](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create)
+ */
+function ${1:classname}() {
+    $2.apply(this, arguments);
+}
+
+//
+$1.prototype = Object.create($2.prototype);
+$1.prototype.constructor = $1;
+$1.__super__ = $2.prototype;
+// mixin($2, OtherSuperClass.prototype); // mixin
+
+$1.prototype.$3 = function($4) {
+
+endsnippet
+
+snippet define "define(f(r,e,m){" b
+define(
+    function(require, exports, module) {
+        "use strict";
+        // http://jshint.com/docs/options/
+        // jshint undef:true
+        // jshint unused:true
+        // jshint strict:true
+        // jshint eqnull:true
+
+        var VUtils = require('Vizicks/VUtils');
+        var ${1:Famous} = require('${2:famous}');
+
+endsnippet
+
+snippet t
+<tag>${VISUAL:inside text/should/is/g}</tag>
+endsnippet
+
+snippet bash "bash declare -p"
+`declare -p`
+endsnippet
+
+snippet per. "PointerEventRouter" i
+PointerEventRouter.
+endsnippet
+
+snippet consolesafe "catch console.log" w
+try {
+	console.${1:log}(${2:message});
+} catch (ex) {
+	console.$1("Caught exception:: console.log(" + `!p
+import json
+snip.rv = json.dumps(t[2])`);
+};
+endsnippet
+
+snippet wow
+${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
+endsnippet
+
+snippet wow2
+${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
+endsnippet
+
+snippet /\.pr(o)?/ "prototype." r
+.prototype.${1:methodName} = function(${2:object}) {
+    $3
+};
+
+endsnippet
+
+snippet assert "VUtils.assert" w
+VUtils.assert(${1:istrue}, "${2:Assertion Failed}");
+$3
+endsnippet
+
+snippet refute "VUtils.refute" w
+VUtils.refute(${1:isfalse}, "${2:Negative Assertion Failed}");
+$3
+endsnippet
+
+snippet oiu "oEvent, iEvent, cTarget, oTarget" w
+oEvent, iEvent, cTarget, oTarget
+endsnippet
+
+snippet Array.equals "Array.equals / every" w
+(function(array1, array2) {
+	return (array1.length == array2.length) && array1.every(function(element, index) {
+		return element === array2[index]; 
+	});
+})(${1:array1}, ${2:array2})
+endsnippet
+
+snippet nreq "x = require('x');" b
+${1:fs} = require('$1');
+endsnippet
+
+snippet rand "Math.floor(Math.random()*x)" w
+(Math.floor(Math.random()*${1:256}))
+endsnippet
+
+snippet lowercasestupid
+$1 `!p snip.rv=t[1][0:1].lower()`
+endsnippet
+
+snippet "(\w+).par" "Parenthesis (postfix)" r
+(`!p snip.rv = match.group(1)`$1)$0
+endsnippet
+
+snippet /(\$\(.*\)\.)each/ "each(f(k,v))" r
+`!p snip.rv = match.group(1)`each( function(k, v) {
+    var $v = $(v);
+    $0
+});
+endsnippet
+
+snippet /(\$[^\s]+)@(\w+)/ "$().attr" r
+`!p snip.rv = match.group(1)`.attr("`!p snip.rv = match.group(2)`"$0
+endsnippet
+
+snippet /(\w+)\[]\s?=/ "$o[] = ?" r
+(`!p snip.rv = match.group(1)`[${1:key}] = $A(`!p snip.rv = match.group(1)`[$1])).push(${2:value});$0
+endsnippet
+
+
+snippet $A "var $A = func..." b
+var $A = (function() {
+   return function(b) {
+      if (b === null || b === undefined) return [];
+      if (Array.isArray(b)) return b;
+      if (toString.call(b.length) == '[object Number]') {
+         if (b.length > 0) return Array.prototype.slice.call(b);
+         else return [];
+      }
+      return [b];
+   };
+})();
+endsnippet
+
+snippet isString "isString" w
+(toString.call(${1:var}) === "[object String]")
+endsnippet
+
+
