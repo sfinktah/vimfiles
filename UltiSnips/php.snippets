@@ -1,0 +1,46 @@
+snippet decho "echo debug" b
+echo "<pre>[debug] ${1:message}</pre>\n";
+endsnippet
+
+snippet dpre "pre debug" b
+printf("<pre>[debug print_r] %s</pre>\n", print_r(array('$1' => ${1:object}), 1));
+
+endsnippet
+
+snippet /^( {6,})(.* |)@([.])/ "coffee @ self" rA
+`!p snip.rv = match.group(1)``!p snip.rv = match.group(2)`$this->
+endsnippet
+
+snippet /^( {8,})(.*[^\w]|)@@([.])/ "coffee-ish @@ static" rA
+`!p 
+snip.rv = match.group(1)
+snip.rv += match.group(2)
+snip.rv += get_current_class_name(snip)
+snip.rv += match.group(3)
+`
+endsnippet
+
+snippet /(?<=[^\w])for (\$\w+) in ([^:]+):/ "python for" rA
+foreach (`!p snip.rv = match.group(2)` as `!p snip.rv = match.group(1)`) {
+	$1
+}
+$0
+endsnippet 
+
+snippet /(?<=[^\w])for (\$\w+), (\$\w+) in ([^:]+):/ "python for tuple" rA
+foreach (`!p snip.rv = match.group(3)` as `!p snip.rv = match.group(1)` => `!p snip.rv = match.group(2)`) {
+	$1
+}
+$0
+endsnippet 
+
+# Python-like .format
+snippet /(?<=[[{(=, ])("[^{"]*{[^}]*}[^"]*")\.f$/ "auto .format 1" rA
+format(`!p snip.rv = match.group(1)`, $2)$0
+endsnippet
+
+snippet /(?<=[[{(=, ])('[^{']*{[^}]*}[^']*')$/ "auto .format 2" rA
+format(`!p snip.rv = match.group(1)`, $2)$0
+endsnippet
+
+

@@ -24,13 +24,13 @@ endif
   " unlet b:current_syntax
 " endif
 
-" syn region cBracket     transparent start='\[\|<::\@!' end=']\|:>' 
+" syn region cBracket     transparent start='\[\|<::\@!' end=']\|:>'
 "     contains=ALLBUT,nasmStdInstruction,cIdaStack,cIdaHexDump
 
 syn sync clear
 
 syn keyword cTodo   contained TODO FIXME XXX
-syn region cComment     matchgroup=cCommentStart start=";" end="$" keepend contains=@cCommentGroup,cCommentStartError,cCommentString,cCharacter,cNumbersCom,cSpaceError,@Spell 
+syn region cComment     matchgroup=cCommentStart start=";" end="$" keepend contains=@cCommentGroup,cCommentStartError,cCommentString,cCharacter,cNumbersCom,cSpaceError,@Spell
 
 
 " cCommentGroup allows adding matches for special things in comments
@@ -153,7 +153,7 @@ syn keyword nasmStdInstruction xtest vmgetinfo vmsetinfo vmdxdsbl vmdxenbl vmcpu
 syn keyword nasmStdInstruction vmpopfd vmcli vmsti vmiretd vmsgdt vmsidt vmsldt vmstr vmsdte vpcext
 syn keyword nasmStdInstruction vfmaddsubps vfmaddsubpd vfmsubaddps vfmsubaddpd vfmaddps vfmaddpd vfmaddss
 syn keyword nasmStdInstruction vfmaddsd vfmsubps vfmsubpd vfmsubss vfmsubsd vfnmaddps vfnmaddpd vfnmaddss
-syn keyword nasmStdInstruction vfnmaddsd vfnmsubps vfnmsubpd vfnmsubss vfnmsubsd 
+syn keyword nasmStdInstruction vfnmaddsd vfnmsubps vfnmsubpd vfnmsubss vfnmsubsd
 
 syn keyword cMixRegister rax eax ax al rbx ebx bx bl rcx ecx cx cl rdx edx dx dl rsi esi si sil rdi edi
 syn keyword cMixRegister di dil rbp ebp bp bpl rsp esp sp spl r8 r8d r8w r8b r9 r9d r9w r9b r10 r10d
@@ -181,7 +181,7 @@ syn keyword cMixRegister64 rax rcx rdx rbx rsp rbp rsi rdi r8 r9 r10 r11 r12 r13
 " mmx     MMX0  MMX1  MMX2  MMX3  MMX4   MMX5   MMX6    MMX7
 " xmm     XMM0  XMM1  XMM2  XMM3  XMM4   XMM5   XMM6    XMM7
 " ymm     YMM0  YMM1  YMM2  YMM3  YMM4   YMM5   YMM6    YMM7
-" sReg    ES    CS    SS    DS    FS     GS     
+" sReg    ES    CS    SS    DS    FS     GS
 " cReg    CR0   CR1   CR2   CR3   CR4    CR5    CR6     CR7
 " dReg    DR0   DR1   DR2   DR3   DR4    DR5    DR6     DR7
 
@@ -193,7 +193,7 @@ syn keyword cMixRegister64 rax rcx rdx rbx rsp rbp rsi rdi r8 r9 r10 r11 r12 r13
 " mmx     MMX0  MMX1  MMX2  MMX3  MMX4   MMX5   MMX6    MMX7
 " xmm     XMM8  XMM9  XMM10 XMM11 XMM12  XMM13  XMM14   XMM15
 " ymm     YMM8  YMM9  YMM10 YMM11 YMM12  YMM13  YMM14   YMM15
-" sReg    ES    CS    SS    DS    FS     GS     
+" sReg    ES    CS    SS    DS    FS     GS
 " cReg    CR8   CR9   CR10  CR11  CR12   CR13   CR14    CR15
 " dReg    DR8   DR9   DR10  DR11  DR12   DR13   DR14    DR15
 "
@@ -201,24 +201,23 @@ syn keyword cMixRegister64 rax rcx rdx rbx rsp rbp rsi rdi r8 r9 r10 r11 r12 r13
 " 64-bit register Lower 32 bits Lower 16 bits Lower 8 bits
 " rax
 "
-
-" 64-bit Lower-32-bits	Lower-16-bits	Lower-8-bits
-syn keyword cMixRegisterAX rax    eax  ax   al
-syn keyword cMixRegisterBX rbx    ebx  bx   bl
-syn keyword cMixRegisterCX rcx    ecx  cx   cl
-syn keyword cMixRegisterDX rdx    edx  dx   dl
-" syn keyword cMixRegisterRSI rsi    esi  si   sil
-" syn keyword cMixRegisterRDI rdi    edi  di   dil
-" syn keyword cMixRegisterRBP rbp    ebp  bp   bpl
-syn keyword cMixRegisterSP rsp    esp  sp   spl 
-" r8     r8d  r8w  r8b
-" r9     r9d  r9w  r9b
-" r10    r10d r10w r10b
-" r11    r11d r11w r11b
-" r12    r12d r12w r12b
-" r13    r13d r13w r13b
-" r14    r14d r14w r14b
-" r15    r15d r15w r15b
+"                          64-bit Lower-32-bits Lower-16-bits Lower-8-bits
+syn keyword cMixRegisterAX rax    eax           ax            al ah
+syn keyword cMixRegisterBX rbx    ebx           bx            bl bh
+syn keyword cMixRegisterCX rcx    ecx           cx            cl ch
+syn keyword cMixRegisterDX rdx    edx           dx            dl dh
+syn keyword cMixRegisterBP rbp    ebp           bp            bpl
+syn keyword cMixRegisterSP rsp    esp           sp            spl
+syn keyword cMixRegisterDI rdi    edi           di            dil
+syn keyword cMixRegisterSI rsi    esi           si            sil
+syn keyword cMixRegister8  r8     r8d           r8w           r8b
+syn keyword cMixRegister9  r9     r9d           r9w           r9b
+syn keyword cMixRegister10 r10    r10d          r10w          r10b
+syn keyword cMixRegister11 r11    r11d          r11w          r11b
+syn keyword cMixRegister12 r12    r12d          r12w          r12b
+syn keyword cMixRegister13 r13    r13d          r13w          r13b
+syn keyword cMixRegister14 r14    r14d          r14w          r14b
+syn keyword cMixRegister15 r15    r15d          r15w          r15b
 
 syn match cUpperCamelCase "\C\<\([A-Z][a-z]\+\)\+\w*"
 syn match win32api containedin=cBracket "\C\<\(Get\|Set\|File\|Crypt\|Create\|Info\|Window\|Enum\|Cert\|Key\|Printer\|Name\|To\|Reg\|Console\|Message\|Card\|Is\|System\|Add\|S\|Win\|Open\|Delete\|Context\|Find\|String\|Query\|Text\|Menu\|Store\|Cred\|Snmp\|Process\|Object\|Char\|W\|Net\|Certificate\|Service\|From\|Write\|Event\|Windows\|Resource\|Rect\|User\|Register\|Meta\|Load\|Evt\|Data\|Transacted\|Default\|Change\|Time\|Font\|Profile\|Thread\|Status\|Free\|Device\|Config\|Rgn\|Input\|Display\|Close\|UI\|Verify\|Pointer\|Item\|Http\|Dlg\|Comm\|Value\|Read\|Dns\|Notification\|Information\|Format\|Directory\|Point\|Path\|Msg\|In\|Global\|Color\|Class\|Mode\|Log\|Driver\|Copy\|Usb\|State\|Private\|List\|Handle\|Clipboard\|Wlx\|DC\|Cursor\|Box\|Type\|Processor\|Print\|Pipe\|Id\|For\|CTL\|Connection\|wgl\|Size\|Remove\|OID\|Indirect\|Volume\|Update\|Memory\|Long\|Hash\|Enh\|Cache\|Buffer\|Unregister\|Provider\|Param\|Palette\|Notify\|Map\|Dialog\|CRL\|Atom\|Virtual\|Lookup\|Local\|Job\|Icon\|Draw\|Current\|Send\|Raw\|Ptr\|Property\|Output\|Next\|Locale\|End\|Cancel\|By\|Url\|Shutdown\|Section\|Scroll\|Reader\|Pos\|Language\|Group\|Function\|Desktop\|Credentials\|Check\|Valid\|Touch\|Start\|Properties\|Proc\|Physical\|Numa\|First\|Fill\|Ext\|Ctx\|Chain\|And\|Act\|Version\|Timer\|Str\|Select\|Record\|Policy\|Named\|Monitor\|Layout\|Gdi\|Frame\|Duplicate\|Brush\|Bits\|Bitmap\|Alloc\|Wait\|Sign\|Settings\|Screen\|Move\|Keyboard\|Hook\|Formats\|Firmware\|Error\|Count\|Computer\|Compare\|Wow64\|Signature\|Security\|Power\|Poly\|Page\|Org\|Of\|Lock\|Languages\|Extent\|Clip\|Character\|Calendar\|Table\|Safer\|Response\|Request\|Replace\|Public\|Port\|Pen\|Out\|Oem\|Mount\|Mask\|Length\|Initialize\|ID\|ICM\|Export\|Environment\|Encrypted\|Encoded\|Destroy\|Def\|Ctrl\|Callback\|Blt\|Bad\|Audit\|Application\|Alarm\|Wintrust\|Ver\|Variable\|Use\|Usage\|Tape\|Station\|Server\|Pixel\|Number\|Node\|Module\|IME\|History\|Form\|Ex\|Entry\|Enable\|Dir\|Credential\|Control\|Connect\|Caret\|Call\|Buff\|Alias\|Account\|Working\|With\|View\|Unicode\|Translate\|Title\|Space\|Session\|Save\|Router\|Restore\|Release\|Prov\|Privilege\|Pages\|Mouse\|Mem\|Mapping\|Link\|Level\|Last\|Image\|Flush\|Fiber\|Doc\|Date\|CP\|Client\|Child\|Backup\|Async\|App\|Active\|Accelerator\|32\|Abort\)\+\(A\|W\|Ex\|s\)*\>"
@@ -256,11 +255,16 @@ syn match       cMixAutoLabel            "\C\<[a-z]\+_[A-F0-9]\+\>"
 syn match cStackVar "\C\<\(var_\x\+\)"
 " syn match       cComment                 ";.*$"
 
-syn match       cMixIdaAsmStart "^\S\+:\x*"        nextgroup=cIdaStack   skipwhite 
-syn match       cIdaStack       "\(\s[0-9A-F-]\x\x\+\)\{0,1\}"   nextgroup=cIdaCounter   skipwhite contained
-syn match       cIdaCounter     "\(\s\+# \{0,2\}[0-9]\{1,\}\)\{0,1\}"   nextgroup=cIdaHexDump   skipwhite contained
-syn match       cIdaHexDump     "\(\<\x\x\>\s\)\+" nextgroup=cIdaSpacing skipwhite contained
-syn match       cIdaSpacing     "\s\{5,\}" contained
+syn match       cPatch                "\$((\(.\{-}\)))"
+
+syn match cMixIdaAsmStart  "^\S\+\x\+"                       nextgroup=cIdaStack        skipwhite
+syn match cIdaStack        "\(\s-\?\x\+\>\)"                   nextgroup=cIdaStackDiff    skipwhite contained
+syn match cIdaStackDiff    "\(\s\+[-]\x\+\>\)\?"               nextgroup=cIdaStackDiffPos skipwhite contained
+syn match cIdaStackDiffPos "\(\s\+[+]\?\x\+\>\)\?"             nextgroup=cIdaStackDiffEx  skipwhite contained
+syn match cIdaStackDiffEx  "\(\s*([+-]\?\x\+\>)\)\?"           nextgroup=cIdaSub          skipwhite contained
+syn match cIdaSub          "\([a-zA-Z_]\w\+\>\)"               nextgroup=cIdaHexDump      skipwhite skipempty contained
+syn match cIdaHexDump      "\(\<\x\x\>\s\)\+"                nextgroup=cIdaSpacing      skipwhite contained
+syn match cIdaSpacing      "\s\{5,\}"                        contained
 syn case match
 
 " See :syn-skipempty (interesting also to see :syn-pattern-offset)
@@ -274,7 +278,7 @@ syn case match
 "------------------------------------------------------------------
 "   GUIDE
 "
-"  First Token breakdown 
+"  First Token breakdown
 "  00000084 <_main>:
 "
 "       ^       Beginning of line
@@ -310,6 +314,7 @@ if version >= 508 || !exists("did_cmix_syn_inits")
   HiLink cStackVar               cMixAsm
   HiLink cUpperCamelCase         cMixLabel
   HiLink cMixLabel               DiffDelete
+  HiLink cPatch                  DiffDelete
   HiLink cMixAsm                 Special
   HiLink nasmStdInstruction      Statement
   HiLink cMixRegister            cType
@@ -317,6 +322,7 @@ if version >= 508 || !exists("did_cmix_syn_inits")
   HiLink cMixUserLabel              Function
   " HiLink cIdaStack               Todo
   HiLink cIdaHexDump             Function
+  " HiLink cIdaSub             DiffDelete
 
 " Define the default highlighting.
 " Only used when an item doesn't have highlighting yet
@@ -397,13 +403,35 @@ let s:cyan        = "#2aa198"
 let s:green       = "#719e07" "experimental
 
 command -nargs=* SynColor hi def <args>
-SynColor cMixRegisterDX term=none cterm=none ctermfg=176 ctermbg=NONE gui=none  guibg=NONE guifg=#d33682
-SynColor cMixRegisterSP	term=none cterm=none ctermfg=63  ctermbg=NONE gui=none  guibg=NONE guifg=#6c71c4
-SynColor cMixRegisterCX	term=none cterm=none ctermfg=39  ctermbg=NONE gui=none  guibg=NONE guifg=#2680ff
-SynColor cMixRegisterAX	term=none cterm=none ctermfg=29  ctermbg=NONE gui=none  guibg=NONE guifg=#268b00
-SynColor cMixRegisterBX	term=none cterm=none ctermfg=208 ctermbg=NONE gui=none  guibg=NONE guifg=#cb4b16
-SynColor cIdaStack	term=none cterm=none ctermfg=yellow ctermbg=NONE gui=none  guibg=NONE guifg=#b58900
-SynColor cIdaCounter	term=none cterm=none ctermfg=27  ctermbg=NONE gui=none  guibg=NONE guifg=#005fff
+" SynColor cMixRegisterAX       term=none cterm=none ctermfg=29  ctermbg=NONE gui=none  guibg=NONE guifg=#268b00
+" SynColor cMixRegisterBX       term=none cterm=none ctermfg=208 ctermbg=NONE gui=none  guibg=NONE guifg=#cb4b16
+" SynColor cMixRegisterCX       term=none cterm=none ctermfg=39  ctermbg=NONE gui=none  guibg=NONE guifg=#2680ff
+" SynColor cMixRegisterDX       term=none cterm=none ctermfg=176 ctermbg=NONE gui=none  guibg=NONE guifg=#d33682
+" SynColor cMixRegisterSP       term=none cterm=none ctermfg=63  ctermbg=NONE gui=none  guibg=NONE guifg=#6c71c4
+SynColor cIdaStack      term=none cterm=none ctermfg=yellow ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cIdaStackDiff  term=none cterm=none ctermfg=46  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cIdaStackDiffPos  term=none cterm=none ctermfg=226  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cIdaStackDiffEx  term=none cterm=none ctermfg=137 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cIdaSub        term=none cterm=none ctermfg=29  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+" 214 226 154 46  49  51  39  131 137 107 71  72  67  61  97 147 
+SynColor cMixRegisterAX term=none cterm=none ctermfg=29  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterBX term=none cterm=none ctermfg=208 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterCX term=none cterm=none ctermfg=214 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterDX term=none cterm=none ctermfg=226 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterBP term=none cterm=none ctermfg=154 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterSP term=none cterm=none ctermfg=46  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterDI term=none cterm=none ctermfg=49  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegisterSI term=none cterm=none ctermfg=51  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister8  term=none cterm=none ctermfg=39  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister9  term=none cterm=none ctermfg=131 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister10 term=none cterm=none ctermfg=137 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister11 term=none cterm=none ctermfg=107 ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister12 term=none cterm=none ctermfg=71  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister13 term=none cterm=none ctermfg=72  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister14 term=none cterm=none ctermfg=67  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor cMixRegister15 term=none cterm=none ctermfg=61  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+SynColor Function       term=none cterm=none ctermfg=248  ctermbg=NONE gui=none  guibg=NONE guifg=NONE
+
 " SynColor cMixRegisterRAX term=none cterm=none ctermfg=32 ctermbg=NONE gui=none guibg=none guifg=#839496
 " SynColor cMixRegisterRBX term=none cterm=none ctermfg=48 ctermbg=NONE gui=none guibg=none guifg=#839496
 " SynColor cMixRegisterRCX term=none cterm=none ctermfg=64 ctermbg=NONE gui=none guibg=none guifg=#839496

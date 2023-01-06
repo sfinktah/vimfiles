@@ -1,4 +1,0 @@
-:view diacritics.yaml
-:set filetype=yaml
-:runtime syntax/yaml.vim
-:execute "Format format html to ".escape(g:outfile, " ")

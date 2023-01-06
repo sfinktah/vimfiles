@@ -262,6 +262,11 @@ for (var `!p snip.rv = match.group(1)`, `!p snip.rv = match.group(2)` = 0, ${4:l
 }
 endsnippet
 
+snippet /(?<=[^\w])([^.]+)\.(\w+)\?/ "coffeescript obj.prop?" rA
+`!p snip.rv = match.group(1)`.`!p snip.rv = match.group(2)` != null
+endsnippet
+
+
 # var key, value,
 # hasProp = {}.hasOwnProperty;
 # 
@@ -460,6 +465,11 @@ function traverse(object) {
         next = queue.shift();
     }
 }
+endsnippet
+
+snippet var$t "var $this"
+var $${2:$1} = $(${1:this});
+$0
 endsnippet
 
 # http://stackoverflow.com/questions/28972221/ultisnips-create-argument-list-with-placeholders

@@ -1,3 +1,13 @@
+global !p
+def get_args(line: str):
+  args = []
+  for arg in map(lambda x: x.lstrip(), line.split(',')):
+    temp = arg.split(':')
+    attr, anno = (temp[0], temp[1].lstrip()) if len(temp) > 1 else (temp[0], None)
+    args.append((attr, anno))
+  return args
+endglobal
+
 snippet is0 "IS_NULL" b
 IS_NULL(${1:void_location});
 $2
@@ -110,3 +120,104 @@ snippet bliphook "Blip Hook"
 void ${1:ADD_BLIP_FOR_ENTITY}(scrNativeCallContext    *cxt) { constexpr const uint64_t nativeHash = ${2:0x5CDE92C702A8FCE7}; if (!g_callingNative) genericBlipHook(cxt, nativeHash); Patches::SafeInvoke(cxt, $1_TRAMPOLINE);    genericBlipHookPost(cxt, nativeHash); }
 //		&& HOOK_NATIVE(31 * $2, &$1, &$1_TRAMPOLINE)
 endsnippet
+
+
+snippet ifndef "include guard" w
+ifndef ${1:`!p snip.rv=str(path).replace('/','_').replace('\\','_').replace('.','_').upper()+'_'`}
+#define $1
+
+$0
+
+#endif  // $1
+endsnippet
+
+snippet namespace
+namespace $1 {
+$0
+}  // namespace $1
+endsnippet
+
+snippet LOG(ERROR)
+LOG(ERROR) << __func__$0;
+endsnippet
+
+snippet "<<.(.+)\.logme" "Logging expansion" r
+<< "; `!p snip.rv = match.group(1).replace('"', '\\"')` = " << `!p snip.rv = match.group(1)`$0
+endsnippet
+
+snippet "<<.(.+)\.logint" "Logging expansion" r
+<< "; `!p snip.rv = match.group(1).replace('"', '\\"')` = " << static_cast<int>(`!p snip.rv = match.group(1)`)$0
+endsnippet
+
+snippet "<<.stack" "Logging expansion2" r
+<< "; stack = " << base::debug::StackTrace().ToString()
+endsnippet
+
+snippet "<<.jstack" "Logging expansion2" r
+<< "; js stack = "
+           << [](){
+              char* buf = nullptr; size_t size = 0;
+              FILE* f = open_memstream(&buf, &size);
+              if (!f) return std::string("<mem error>");
+              v8::Message::PrintCurrentStackTrace(
+                  v8::Isolate::GetCurrent(), f);
+              fflush(f); fclose(f);
+              std::string result(buf, size);
+              free(buf);
+              return result; }();
+endsnippet
+
+snippet dp "dprint ..." b
+// dprint("[${1:debug}] $2")
+fmt::format("[$1] `!p
+for arg in get_args(t[2]):
+  snip.rv += f"{arg[0]}:{{}}, "
+snip.rv = snip.rv.rstrip(", ")
+snip.rv += '",\n'
+for arg in get_args(t[2]):
+  snip.rv += f"{arg[0]}, "
+snip.rv = snip.rv.rstrip(", ")
+snip.rv += ')'`
+$0
+endsnippet
+
+
+snippet dpx "dprint ..." b
+// dprintx("[${1:debug}] $2")
+fmt::format("[$1] `!p
+for arg in get_args(t[2]):
+  snip.rv += f"{arg[0]}:{{:x}}, "
+snip.rv = snip.rv.rstrip(", ")
+snip.rv += '",\n'
+for arg in get_args(t[2]):
+  snip.rv += f"{arg[0]}, "
+snip.rv = snip.rv.rstrip(", ")
+snip.rv += ')'`
+$0
+endsnippet
+
+# Python habbits
+
+snippet /(?<=\s)if ([^(])/ "if brackets" rA
+if (`!p snip.rv = match.group(1)`$1) {
+    $2
+}
+$0
+endsnippet
+
+snippet /(?<=\s)if (\(.*\)):/ "if colon" rA
+if `!p snip.rv = match.group(1)` {
+    $1
+}
+$0
+endsnippet
+
+snippet / or / "or" rA
+ || 
+endsnippet
+
+snippet / and / "and" rA
+ && 
+endsnippet
+
+
