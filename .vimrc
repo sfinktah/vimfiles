@@ -14,6 +14,7 @@ if has('gui_running')
     set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
     set guifont=Liberation_Mono:h11:cANSI
+    " set pythonthreedll="python37.dll"
     set runtimepath+=/Users/sfink/vimfiles
     " set runtimepath+=~/.vim
     set runtimepath+=~/.vim/after

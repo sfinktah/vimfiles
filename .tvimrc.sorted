@@ -5,6 +5,7 @@
 " ------------------------------------------------------------------
 set nocompatible              " be iMproved, required
 " set t_Co=256
+set termguicolors
 filetype off                  " required
 set iskeyword=@,48-57,_,192-255,#
 set viminfo+=!
@@ -12,83 +13,34 @@ set rtp+=~/.vim/bundle/Vundle.vim
 let g:loaded_youcompleteme = 1
 call vundle#begin('/home/sfinktah/.vim/bundles')
 Plugin 'gmarik/Vundle.vim'
-Plugin 'pixelneo/vim-python-docstring'
+" ----- snipmate ----
+" ----- ultisnips ---
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
-Plugin 'heavenshell/vim-pydocstring'
-Plugin 'inkarkat/vim-ingo-library'
+Plugin 'glts/vim-textobj-comment'
+Plugin 'heavenshell/vim-jsdoc'
+Plugin 'honza/vim-snippets'
 Plugin 'inkarkat/vim-SearchAlternatives'
 Plugin 'inkarkat/vim-SearchHighlighting'
+Plugin 'inkarkat/vim-ingo-library'
 Plugin 'inkarkat/vim-mark'
-" Plugin 'jeaye/color_coded'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'bogado/file-line'
-" Plugin 'samsaga2/vim-z80'
-" ----- snipmate ----
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
-" Plugin 'honza/vim-snippets'
-" ----- end: snipmate ---
-" ----- ultisnips ---
-" Track the engine.
-
-" Snippets are separated from the engine. Add this if you want them:
-" Plugin 'marijnh/tern_for_vim'
-" Plugin 'honza/vim-snippets'
-" Plugin 'SirVer/ultisnips'
-" Plugin 'https://github.com/myhere/vim-nodejs-complete'
-" Plugin 'majutsushi/tagbar'
-" Plugin 'nkzawa/js-inspector.vim'
-" Plugin 'bigfish/vim-js-context-coloring'
-"  Plugin 'armyofevilrobots/vim-openscad'
-"  Plugin 'bigfish/vim-js-context-coloring'
-"  Plugin 'chrismar035/vim-guitar'
-"  Plugin 'gcmt/taboo.vim'
-"  Plugin 'glts/vim-textobj-comment'
-"  Plugin 'groenewege/vim-less'
-"  Plugin 'guns/xterm-color-table.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'honza/vim-snippets'
 Plugin 'jakar/vim-json'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'jplaut/vim-arduino-ino'
 Plugin 'junegunn/vim-easy-align'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'ldx/vim-indentfinder'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'lilydjwg/colorizer'
-" Plugin 'RRethy/vim-hexokinase'
-" Plugin 'Lokaltog/vim-distinguished'
-" Plugin 'majutsushi/tagbar'
-"  Plugin 'marijnh/tern_for_vim'
-" Plugin 'mattn/emmet-vim'
+Plugin 'marijnh/tern_for_vim'
 Plugin 'mhinz/vim-hugefile'
-"  Plugin 'nkzawa/js-inspector.vim'
-Plugin 'pangloss/vim-javascript'
-"  Plugin 'rstacruz/sparkup'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-"  Plugin 'sfinktah/actionscript-vim-bundle'
-Plugin 'sfinktah/javascript-libraries-syntax.vim'
-Plugin 'sfinktah/nerdcommenter'
-Plugin 'sfinktah/Rainbow-Parenthsis-Bundle'
-Plugin 'sfinktah/ultisnips'
-Plugin 'sfinktah/vim-colors-solarized'
-Plugin 'sfinktah/vimwiki'
-"  Plugin 'sfinktah/XML-Folding'
-Plugin 'triglav/vim-visual-increment'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'Shougo/unite.vim'
-Plugin 'stephpy/vim-yaml'
-"  Plugin 'tomasr/molokai'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-abolish'
-"  Plugin 'vim-pandoc/vim-markdownfootnotes'
-Plugin 'vim-scripts/ColorSchemeEditor'
-"  Plugin 'w0ng/vim-hybrid'
-"  Plugin 'wavded/vim-stylus'
+Plugin 'triglav/vim-visual-increment'
+Plugin 'vim-scripts/vimwiki'
 
 
 
@@ -99,7 +51,7 @@ call vundle#end()
 " execute pathogen#infect()
 " filetype off
 filetype plugin indent on     " required!
-
+let g:mwAutoLoadMarks=1
 """ ULTISNIPS
 " Trigger configuration. Do not use <tab> if you use 
 "         https://github.com/Valloric/YouCompleteMe.
@@ -182,9 +134,17 @@ nmap <leader>gs :GlobalSelection<CR>
 nmap <leader>ml :$put =ModelineStub()<CR>
 nmap <silent> <leader>s :set nolist!<CR>
 nnoremap ' `
-nnoremap * :'<,'>s/\C\<<c-r><c-w>\>//g<c-f>$F/i
-nnoremap & :%s/\C\<<c-r><c-w>\>//g<c-f>$F/i
+nnoremap * :'<,'>s/\C\<<C-r><C-w>\>//g<C-f>$F/i
+vnoremap * y:'<,'>s/\C\<<C-r>"\>//g<C-f>$F/i
+nnoremap & :%s/\C\<<C-r><C-w>\>//g<C-f>$F/i
+vnoremap & y:%s/\C\<<C-r>"\>//g<C-f>$F/i
 nnoremap ; :
+" vnoremap <leader>M y:'<,'>s#\V<C-r>"#\=substitute(system('expr '.substitute(submatch(0), '[^ ]\+', "'&'", 'g')),'\n','','g')#<cr>
+" vnoremap <leader>M y:'<,'>s#\V<C-r>"#\=substitute(system('bash -c "echo -n $(( '.submatch(0). ' ))"'),'\n','','g')#<cr>
+vnoremap <leader>M y:'<,'>s#\V<C-r>"#\=system('bash -c "echo -n $(( '.submatch(0). ' ))"')#<cr>
+vnoremap <leader>R y:'<,'>s/\<\(0x\x\{8,}\)\>/\=printf("%09x", str2nr(submatch(1), 16) - 0x0)<C-f>$i
+vnoremap <leader>N y:let i=0 \| '<,'>s#// offset:0x\x\+#\='// offset:'.printf("0x%x", i).execute('let i+=4')#g
+" vnoremap <leader>R y:'<,'>s/\<\(\x\+\)\>/\=printf("%x", str2nr(submatch(1), 16) - 0x)<C-f>$F/"
 nnoremap <C-h> <C-w>h nnoremap <C-j> <C-w>j nnoremap <C-k> <C-w>k nnoremap <C-l> <C-w>l
 nnoremap <F1> <ESC>
 nnoremap <leader><space> :noh<cr>
@@ -199,11 +159,13 @@ nnoremap <tab> %
 nnoremap ` '
 nnoremap j gj
 nnoremap k gk
+set termguicolors
 set autoindent
 set background=dark
 set backspace=indent,eol,start
 set ch=2                " command height = 2
 set cindent
+set cm=blowfish2            " You can use the 'cryptmethod' option to select the type of encryption, use one of these two: :setlocal cm=zip       " weak method, backwards compatible :setlocal cm=blowfish  " strong method
 set encoding=utf-8
 set expandtab
 set ffs=unix,dos
@@ -351,6 +313,16 @@ else
    source ~/.vim/writebackupVersionControl.vim
    source ~/.vim/zynga.vim
    source ~/.vim/ulti.vim
+   " if filereadable(expand("~/.vimrc_background"))
+     " let base16colorspace=256
+     " source ~/.vimrc_background
+   " endif
+   "
+   if !exists('g:colors_name') || g:colors_name != 'base16-default-dark'
+     colorscheme base16-default-dark
+   endif
+   "
+   "
 endif
 syntax enable
 syntax on
@@ -400,6 +372,13 @@ function! ModelineStub()
   let x = printf(&cms, printf(fmt, &ts, &sts, &sw, (&et?"et":"noet")))
   return substitute(substitute(x, '\ \+', ' ', 'g'), ' $', '', '')
 endfunction
+
+function! NativeAsmFunctionDiff()
+   execute ':%s/\r$'
+   execute ':%s/-:Function - \(\w\+\)\n+:Function - \(\w\+\)/XXX \2 \1'
+   execute ':%!grep XXX'
+endfunction
+
 if argc() == 2
 	silent vertical all
 endif
@@ -450,6 +429,9 @@ if has("autocmd")
    augroup END
 	autocmd BufNewFile,BufRead *.zaplog      setf zaplog
    " auto BufEnter * let &titlestring = hostname() . " vim " . expand("%:p")
+   autocmd FileType markdown let b:surround_45 = "```\n\r\n```" vim-surround code block for markdown yss-
+   " vim-surround Block comment for python yss-
+   autocmd FileType python let b:surround_45 = "\"\"\"\n\r\n\"\"\""
 	autocmd FileType coffee compiler coffee
 	autocmd FileType coffee setl ts=2 sw=2 sts=2 et
 	autocmd FileType javascript setl ts=4 sw=4 sts=4 et
@@ -461,7 +443,9 @@ if has("autocmd")
    autocmd BufWritePost *.coffee silent make!
    autocmd FileType coffee setl scrollbind
    autocmd FileType html,css,smarty set smartindent
-   autocmd FileType python set sts=-1
+   " autocmd FileType python set sts=-1 iskeyword=48-57,_,192-255
+   autocmd FileType yscc set iskeyword=@,:,\<,\>,48-57,_,192-255
+   " autocmd FileType python set iskeyword+=.
    autocmd QuickFixCmdPost * nested cwindow | redraw!
    autocmd BufRead * try | execute "compiler compile-".&filetype | catch /./ | endtry
    autocmd FileType cs set ts=4 sw=4
@@ -474,6 +458,7 @@ if has("autocmd")
 endif " has("autocmd")
 if &diff
 	colorscheme leo
+   set syntax=off
 else
    " cygwin:  HOME="/home/sfink"
    " ming/git HOME="/c/Users/sfink"
@@ -483,7 +468,7 @@ else
       colorscheme desert256
    else
       let g:solarized_termcolors=16
-      colorscheme solarized
+      " colorscheme solarized
    endif
 endif
 
@@ -561,4 +546,3 @@ highlight link SyntasticStyleWarningSign SignColumn
 nmap <C-n> :lnext<CR>
 nmap <C-p> :lprev<CR>
 " vim: set ts=3 sts=0 sw=0 et:
-"

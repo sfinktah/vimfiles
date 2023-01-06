@@ -9,11 +9,7 @@ def unload(pattern):
 
 from pprint import PrettyPrinter
 # unload('string_between')
-<<<<<<< HEAD
-from string_between import string_between, string_between_all
-=======
 from string_between import string_between, string_between_all, string_between_splice
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 from underscore import _
 pp = PrettyPrinter(indent=4).pprint
 pf = PrettyPrinter(indent=4).pformat
@@ -26,14 +22,10 @@ def get_args(line: str):
   for arg in map(lambda x: x.lstrip(), line.split(',')):
     temp = arg.split(':')
     attr, anno = (temp[0], temp[1].lstrip()) if len(temp) > 1 else (temp[0], None)
-<<<<<<< HEAD
-    args.append((attr, anno))
-=======
     # anno, attr = [x.strip(': ') for x in string_between_splice(':', '', tmp, repl='', inclusive=1)]
     default, attr = string_between_splice('=', '', attr, repl='', inclusive=1)
     default = default.lstrip('=')
     args.append((attr, anno, default))
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
   return args
 
 def get_arg_names(arglist):
@@ -42,13 +34,6 @@ def get_arg_names(arglist):
 
 	return args
 
-<<<<<<< HEAD
-def first_iterable(iterable, *defaultvalue):
-    return next(iterable, *defaultvalue)
-
-def last_iterable(iterable, *defaultvalue):
-    last = next(iterable, *defaultvalue)
-=======
 def first_iterable(iterable, *args):
     return next(iterable, *args)
 
@@ -58,7 +43,6 @@ def pluck_iterable(iterable, key):
 
 def last_iterable(iterable):
     last = next(iterable)
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
     for last in iterable:
         pass
     return last
@@ -68,25 +52,17 @@ def count_indent(line):
 
 def get_current_def(_snip):
     parents = get_parent_defs_raw(_snip)
-<<<<<<< HEAD
-    return first_iterable(parents)['name']
-=======
     try:
         return first_iterable(parents)['name']
     except StopIteration:
         return ""
     
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 
 def get_current_def_args(_snip):
     # return first_iterable(
             # filter(lambda y: y['type'] == 'def', get_parent_defs_raw(_snip)))['args']
     parents = get_parent_defs_raw(_snip)
-<<<<<<< HEAD
-    return first_iterable(parents, {'args':'None'})['args']
-=======
     return first_iterable(parents, {'args':'None'})['args'] if parents else ""
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 
 def copy_current_def_args(_snip):
     result = []
@@ -104,15 +80,12 @@ def get_current_class_name(_snip):
             filter(lambda y: y['type'] == 'class', get_parent_defs_raw(_snip)),
             {'name': 'none'})['name']
 
-<<<<<<< HEAD
-=======
 def get_current_class_or_def_name(_snip):
     r = first_iterable(
             filter(lambda y: y['type'] in ('class', 'def'), get_parent_defs_raw(_snip)),
             {'name': 'none'})
     return r['name'] or r['type'] or r['unk']
 
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 
 def get_parent_defs_raw(_snip):
     current_line = vim.current.window.cursor[0] - 1
@@ -120,14 +93,9 @@ def get_parent_defs_raw(_snip):
     last_indent = current_indent
     parents = []
     for l in range(current_line, -1, -1):
-<<<<<<< HEAD
-        m = re.match(r'^(\s*)((?:class|def)) (\w+)\((.*)\):', _snip.buffer[l])
-        if m:
-=======
         m = re.match(r'^(\s*)((?:\w+|class|def))(?: (\w+)(?:\((.*)\):)?)?', _snip.buffer[l])
         if m:
             print("-".join([x for x in m.groups() if x is str]))
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
             _indent = len(m[1])
             _type = m[2]
             _name = m[3]
@@ -135,14 +103,6 @@ def get_parent_defs_raw(_snip):
 
             if last_indent is None or _indent < last_indent:
                 last_indent = _indent
-<<<<<<< HEAD
-                yield {
-                    'indent': _indent,
-                    'type':   _type,
-                    'name':   _name,
-                    'args':   _args,
-                }
-=======
                 if _type in ('class', 'def'):
                     yield {
                         'indent': _indent,
@@ -150,7 +110,6 @@ def get_parent_defs_raw(_snip):
                         'name':   _name,
                         'args':   _args,
                     }
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
                 if _indent == 0:
                     break
 
@@ -175,13 +134,8 @@ commentZoneIds = vim.eval('map('+str(commentZones)+", 'hlID(v:val)')")
 def isCode():
     """ https://vi.stackexchange.com/a/18494/10033 """
     synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
-<<<<<<< HEAD
-    print("synstackids: {} commentZoneIds: {}  pythonZoneIds: {}" \
-        .format(synstackids, commentZoneIds, pythonZoneIds))
-=======
     # print("synstackids: {} commentZoneIds: {}  pythonZoneIds: {}" \
         # .format(synstackids, commentZoneIds, pythonZoneIds))
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
     if not synstackids:
         return True
     if not set(synstackids).isdisjoint(pythonZoneIds):
@@ -202,19 +156,6 @@ else:
     def __init__(self, $3):`!p
 snip >> 2
 for arg in get_args(t[3]):
-<<<<<<< HEAD
-  snip += f"mself.{arg[0]} = {arg[0]}"`$0
-endsnippet
-
-snippet dp "dprint ..." b
-# dprint("[${1:debug}] $2")
-print("[$1] `!p
-for arg in get_args(t[2]):
-  snip.rv += f"{arg[0]}:{{}}, "
-snip.rv = snip.rv.rstrip(", ")
-snip.rv += '".format('
-for arg in get_args(t[2]):
-=======
   a = string_between('', '=', arg[0], retn_all_on_fail=1).strip()
   snip += f"self.{a} = {a}"`$0
 endsnippet
@@ -227,15 +168,12 @@ for arg in get_args(t[1]):
 snip.rv = snip.rv.rstrip(", ")
 snip.rv += '".format('
 for arg in get_args(t[1]):
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
   snip.rv += f"{arg[0]}, "
 snip.rv = snip.rv.rstrip(", ")
 snip.rv += '))'`
 $0
 endsnippet
 
-<<<<<<< HEAD
-=======
 snippet dph "dprint hex ..." b
 # dprint("[${2:debug}] $1")
 print("[$2] `!p
@@ -265,7 +203,6 @@ for arg in get_args(t[1]):
 $0
 endsnippet
 
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 snippet /(?<=[^.\w])pf\(/ "print f-string as .format" rA
 # pf("${1:debug} $2")
 print("`!p
@@ -288,8 +225,6 @@ if later:
     snip.rv += ')'`)
 endsnippet
 
-<<<<<<< HEAD
-=======
 snippet flatten "flatten comprehension" w
 ${2:flat_list} = [${3:item} for ${4:sublist} in ${1:list} ${5:for $3 in $4}]
 
@@ -301,7 +236,6 @@ for $4 in $1:
         $2.append($3)
 endsnippet
 
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 snippet terncomp "ternary comprehension" wA
 $6[${3:f($2)} if ${4:condition} else ${5:f($2)} for ${2:x} in ${1:sequence}]
 $0
@@ -341,17 +275,6 @@ $0
 endsnippet
 
 
-<<<<<<< HEAD
-snippet /^( {8,})(.* |)@([.])/ "coffee @ self" rA
-`!p snip.rv = match.group(1)``!p snip.rv = match.group(2)`self`!p snip.rv = match.group(3)`
-endsnippet
-
-snippet /^( {8,})(.*[^\w]|)@@([.])/ "coffee-ish @@ static" rA
-`!p 
-snip.rv = match.group(1)
-snip.rv += match.group(2)
-snip.rv += get_current_class_name(snip)
-=======
 snippet /^( {8,})(.* |)@([.])/ "coffee @. self" rA
 `!p snip.rv = match.group(1)``!p snip.rv = match.group(2)`self`!p snip.rv = match.group(3)`
 endsnippet
@@ -381,7 +304,6 @@ snip.rv = match.group(1)
 snip.rv += match.group(2)
 snip.rv += get_current_class_or_def_name(snip)
 snip.rv += '.'
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 snip.rv += match.group(3)
 `
 endsnippet
@@ -443,359 +365,6 @@ endsnippet
 snippet dprint "debug print" w
 print("$1", $1)
 $0
-<<<<<<< HEAD
-endsnippet
-
-# snippet /(print\("[^"]+{[^"]+")/ "print format" rA
-# `!p snip.rv = match.group(1)`.format($0))
-# endsnippet
-
-snippet /^(\s*)defea / "def using eax" rA
-`!p snip.rv = match.group(1)`def ${1:func}(ea=None$2):
-    """
-    ${6:$1}
-
-    @param ea: linear address
-    """
-    if isinstance(ea, list):
-        return [$1(x) for x in ea]
-
-    ea = eax(ea)
-    $0
-
-
-endsnippet
-
-snippet /^(\s*)deffea / "def using func eax" rA
-`!p snip.rv = match.group(1)`def ${1:func}(${2:funcea}=None$3):
-    """
-    ${6:$1}
-
-    @param $2: any address in the function
-    """
-    if isinstance(funcea, list):
-        return [$1(x) for x in funcea]
-
-    $2 = eax($2)
-    func = ida_funcs.get_func($2)
-
-    if not func:
-        return 0
-    else:
-        $2 = func.start_ea
-
-    $0
-endsnippet
-
-snippet /^(\s*)defeaf / "def using func and eax" rA
-`!p snip.rv = match.group(1)`def ${1:func}(${2:funcea}=None, ea=None$3):
-    """
-    ${6:$1}
-
-    @param $2: any address in the function
-    @param ea: linear address
-    """
-    ea = eax(ea)
-    func = ida_funcs.get_func(eax($2))
-
-    if not func:
-        return 0
-    else:
-        $2 = func.start_ea
-
-    $0
-endsnippet
-
-snippet /^(\s*)defname / "def using name_by_any" rA
-`!p snip.rv = match.group(1)`def ${1:func}(addr_name=None$2):
-    """
-    ${6:$1}
-
-    @param addr_name: name or linear address 
-    """
-    ea = eax(addr_name)
-    ean = idc.get_name(ea)
-    $0
-
-
-endsnippet
-
-snippet /(?<=[[{(=, ])("[^{"]*{[^}]*}[^"]*")$/ "auto .format 1" rA
-`!p snip.rv = match.group(0)`.format($1)$0
-endsnippet
-
-snippet /(?<=[[{(=, ])('[^{']*{[^}]*}[^']*')$/ "auto .format 2" rA
-`!p snip.rv = match.group(0)`.format($1)$0
-endsnippet
-
-
-snippet /(["'][\w:]+["']).ea/ "postfix ea" r
-idc.get_name_ea_simple(`!p snip.rv = match.group(1)`)$0
-endsnippet
-
-snippet /(["'][\w:]+["'])\.ea([^\w])/ "postfix quoted address" rA
-idc.get_name_ea_simple(`!p snip.rv = match.group(1)`)`!p snip.rv = match.group(2)`$0
-endsnippet
-
-snippet /(\w+)\.ea([^\w])/ "postfix address" rA
-idc.get_name_ea_simple(`!p snip.rv = match.group(1)`)`!p snip.rv = match.group(2)`$0
-endsnippet
-
-snippet /([\w:]+)\.na([^\w])/ "postfix name" rA
-idc.get_name(`!p snip.rv = match.group(1)`)`!p snip.rv = match.group(2)`$0
-endsnippet
-
-snippet /([\w:]+)\.nas([^\w])/ "postfix visible name" rA
-idc.get_name(`!p snip.rv = match.group(1)`, ida_name.GN_VISIBLE)`!p snip.rv = match.group(2)`$0
-endsnippet
-
-snippet /^(\s+)(\w+)\.ea(ch)?/ "each postfix" r
-`!p snip.rv = match.group(1)`for ${1:value} in `!p snip.rv = match.group(2)`:
-`!p snip.rv = match.group(1)`    $0
-endsnippet
-
-snippet /(\S\s*)(\w+)\.ea(ch)?/ "each postfix" r
-`!p snip.rv = match.group(1)`[${1:x} for $1 in `!p snip.rv = match.group(2)`]
-endsnippet
-
-snippet /(\s)(\S+)\((\w+)\)\.ea(ch)?/ "each postfix" r
-`!p snip.rv = match.group(1)`[`!p snip.rv = match.group(2)`(${1:x}) for $1 in `!p snip.rv = match.group(3)`]
-endsnippet
-
-
-
-snippet /\.(for)?[eE](ach)?/ ".forEach(v,k,a)" r
-.forEach(function(${1:value, index, array}) {
-    $0
-});
-endsnippet
-
-
-
-# snippet /\(([a-zA-Z0-9_]+)/ "wrap'n'brack" r
-# (`!p snip.rv = match.group(1)`, ${1})
-# endsnippet
-# 
-# snippet /([a-zA-Z_][a-zA-Z0-9_, ]+[a-zA-Z0-9_])\)/ "wrap'n'brack" r
-# (`!p snip.rv = match.group(1)`)
-# endsnippet
-
-# snippet /([a-zA-Z_][a-zA-Z0-9_]+)\.len/ "postfix len" r
-# len(`!p snip.rv = match.group(1)`)
-# endsnippet
-# 
-snippet /(\w+)\.len(g(t(h)?)?)?/ "postfix len2" r
-len(`!p snip.rv = match.group(1)`)
-endsnippet
-
-snippet /(\w+)\.eachies/ "_.each(..)" r
-_.each(`!p snip.rv = match.group(1)`, function(value, key) {
-    $1
-}
-endsnippet
-
-context "isCode()"
-snippet /if ?is/ "if isinstance" r
-if isinstance(${1:var}, ${2:basestring}):
-    $0
-endsnippet
-
-context "isCode()"
-snippet /if ?n(ot)? ?is/ "if not isinstance" r
-if not isinstance(${1:var}, ${2:basestring}):
-    $0
-endsnippet
-
-context "isCode()"
-snippet /isin/ "isinstance" r
-isinstance(${1:var}, ${2:basestring})
-endsnippet
-
-context "isCode()"
-snippet /(?<=[^w])true/ "True" rA
-True
-endsnippet
-
-context "isCode()"
-snippet false "False" wA
-False
-endsnippet
-
-context "isCode()"
-snippet /fal([^a-zA-Z0-9_])/ "Fallon" wrA
-Fallon`!p snip.rv = match.group(1)`
-endsnippet
-
-context "isCode()"
-snippet /else if/ "elif" rA
-elif
-endsnippet
-
-context "isCode()"
-snippet /(\w+)\.is/ "isinstance" r
-isinstance(`!p snip.rv = match.group(1)`, ${1:basestring})
-endsnippet
-
-context "isCode()"
-snippet /(\S.*) unless / "unless" rA
-if not $1:
-    `!p snip.rv = match.group(1)`
-$0
-endsnippet
-
-context "isCode()"
-snippet 'return unless' "return unless" wA
-if not $1:
-    print("return_unless: $1")
-    return $2
-$0
-endsnippet
-
-context "isCode()"
-snippet 'continue unless' "continue unless" wA
-if not $1:
-    print("continue_unless: $1")
-    continue
-$0
-endsnippet
-
-
-context "isCode()"
-snippet 'continue if' "continue if" wA
-if $1:
-    print("continue_if: $1")
-    continue
-$0
-endsnippet
-
-
-context "isCode()"
-snippet 'return if' "return if" wA
-if $1:
-    print("return_if: $1")
-    return $2
-$0
-endsnippet
-
-context "isCode()"
-snippet /([^\s]+)\.not/ "pre-not" r
-not `!p snip.rv = match.group(1)`$0
-endsnippet
-
-
-context "isCode()"
-snippet /([^\s]+)\.matches\(/ "pre-re.match" rA
-re.match(r'$1', `!p snip.rv = match.group(1)`)
-endsnippet
-
-
-context "isCode()"
-snippet /(?<=[^.\w])Name\(/ "get_name" rA
-idc.get_name($1, ida_name.GN_VISIBLE)$0
-endsnippet
-
-context "isCode()"
-snippet /printea\(/ "print('0x{:x}..." rA
-print("0x{:x} $1".format(ea$2))
-$0
-endsnippet
-
-context "isCode()"
-snippet /(\s)(\S+)\.good([^\w])/ "postfix !BADADDR" rA
-`!p snip.rv = match.group(1)``!p snip.rv = match.group(2)` < 0xff00000000000000`!p snip.rv = match.group(3)`$0
-endsnippet
-
-context "isCode()"
-snippet /(\s)(\S+)\.bad([^\w])/ "postfix BADADDR" rA
-`!p snip.rv = match.group(1)``!p snip.rv = match.group(2)` & 0xff00000000000000`!p snip.rv = match.group(3)`$0
-endsnippet
-
-context "isCode()"
-snippet /(\s)(if .*)!([^=])/ "if !" rA
-`!p snip.rv = match.group(1)``!p snip.rv = match.group(2)`not`!p snip.rv = match.group(3)` $0
-endsnippet
-
-snippet args "copy func args" w
-`!p snip.rv = copy_current_def_args(snip)`
-endsnippet
-
-snippet /(?<=\s)fn\./ "print[func]" rA 
-`!p snip.rv += get_current_def(snip)`.$0
-endsnippet
-
-snippet /(?<=\s)fprint\(/ "print[func]" rA 
-print("[`!p snip.rv += get_current_def(snip)`] $0)
-endsnippet
-
-snippet /(?<=\s)fallprint\(/ "print[func]" rA 
-print("[`!p snip.rv += "::".join([x[1] for x in get_parent_defs(snip)])`] $0)
-endsnippet
-
-snippet /(?<=[^\w])fallst / "[class::def] " rA 
-[`!p snip.rv += "::".join([x[1] for x in get_parent_defs(snip)])`] $0
-endsnippet
-
-
-snippet /(?<=\s)print\((['"])fall:/ "print[class::func]" rA 
-print(`!p snip.rv = match.group(1)`[`!p snip.rv += "::".join([x[1] for x in get_parent_defs(snip)])`] $0
-endsnippet
-
-snippet /(?<=\s)dfprint\(/ "if dbg: print[func]" rA 
-if debug: print("[`!p snip.rv += get_current_def(snip)`] $0)
-endsnippet
-
-snippet /(?<=[^.\w])dfprintf\(/ "if dbg: print{}" rA
-# dprint("${1:`!p snip.rv += get_current_def(snip)`} $2")
-if debug: print("[`!p snip.rv += get_current_def(snip)`] `!p
-later = []
-ori = t[1]
-for arg in string_between_all("{", "}", ori):
-  p = arg.partition(':')
-  ori = ori.replace(arg, ''.join(p[1:]))
-  later.append(p[0])
-  
-snip.rv += ori
-  # snip.rv += f"{arg}:{{}}, "
-# snip.rv = snip.rv.rstrip(", ")
-snip.rv += '"'
-if later:
-    snip.rv += '.format('
-    for arg in later:
-      snip.rv += f"{arg}, "
-    snip.rv = snip.rv.rstrip(", ")
-    snip.rv += ')'`)
-endsnippet
-
-snippet /(?<=\s)([^\s]+)\.is([A-Z][a-z]\w+)([^\w])/ "var.isContainer" rA
-isinstance(`!p snip.rv = match.group(1)`, `!p snip.rv = CamelCase_to_snake_case(match.group(2))`)`!p snip.rv = match.group(3)[1:] if match.group(3).startswith(':') else match.group(3)`
-endsnippet
-    
-snippet /^(\s+)(\w+)\.enum(erate)?/ "enumerate postfix" r
-`!p snip.rv = match.group(1)`for ${1:i}, ${2:value} in enumerate(`!p snip.rv = match.group(2)`):
-`!p snip.rv = match.group(1)`    $0
-endsnippet
-
-snippet /^(\s+)for (\w+,[\w, ]+) in (\w.*)\.enum(erate)?:?/ "enumerate postfix" r
-`!p snip.rv = match.group(1)`for ${1:i}, ${2:tpl} in enumerate(`!p snip.rv = match.group(3)`):
-`!p snip.rv = match.group(1)`    `!p snip.rv = match.group(2)` = $2
-`!p snip.rv = match.group(1)`    $0
-endsnippet
-
-# for c in b[0:size].enum
-snippet /^(\s+)for (\w+) in (\w.*)\.enum(erate)?:?/ "enumerate postfix" r
-`!p snip.rv = match.group(1)`for ${1:i}, ${2:`!p snip.rv = match.group(2)`} in enumerate(`!p snip.rv = match.group(3)`):
-`!p snip.rv = match.group(1)`    $0
-endsnippet
-
-snippet /^(\s+)(@S+)\.dp\\/ "debug print postfix" rA
-
-`!p snip.rv = match.group(1)`print('`!p snip.rv = match.group(2)`: {}'.format(`!p snip.rv = match.group(2)`))
-endsnippet
-
-snippet /(\S+)\.__classname/ ".__class__.__name__" rA
-`!p snip.rv = match.group(1)`.__class__.__name__
-=======
->>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
 endsnippet
 
 # snippet /(print\("[^"]+{[^"]+")/ "print format" rA
