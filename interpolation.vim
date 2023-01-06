@@ -67,7 +67,15 @@ function! s:interpolate()
    " php -r 'echo preg_replace_callback(\"/\" . chr(0x23) . \"\\{(.+?)\\}/\", function ($matches) { return chr(0x22) . \" + ${matches[1]} + \" . chr(0x22); }, file_get_contents(\"php://stdin\"));'
    "
    " console.log("(job " + job.length + " @{job.length}");
+
+   " #{print} = print
+   exec ":.!~/bin/interpolate.py"
    exec ":.!php -r 'echo preg_replace_callback(chr(0x2f) . chr(0x23) . chr(0x7b) . \"(.+?)}/\", function ($matches) { return chr(0x22) . \" + ${matches[1]} + \" . chr(0x22); }, file_get_contents(\"php://stdin\"));'"
+   
+   " ${blah} = $blah
+   exec ":.!php -r 'echo preg_replace_callback(chr(0x2f) . \"[\" . chr(0x24) . \"]\" . chr(0x7b) . \"(.+?)}/\", function ($matches) { return chr(0x22) . \" + \\$${matches[1]} + \" . chr(0x22); }, file_get_contents(\"php://stdin\"));'"
+   exec ":.!php -r 'echo preg_replace_callback(chr(0x2f) . \"[\" . chr(0x24) . \"]\" . chr(0x7b) . \"(.+?)}/\", function ($matches) { return chr(0x22) . \" + \\$${matches[1]} + \" . chr(0x22); }, file_get_contents(\"php://stdin\"));'"
+   " exec ":.!php -r 'echo preg_replace_callback(\"/[\$#]{(.+?)}/\", function ($matches) { return chr(0x22) . \" + ${matches[1]} + \" . chr(0x22); }, file_get_contents(\"php://stdin\"));'"
    " exec ":.!php -r 'echo preg_replace_callback(\"/\" . chr(0x23) . \"\\{(.+?)\}/\", function ($matches) { return chr(0x22) . \" + ${matches[1]} + \" . chr(0x22); }, file_get_contents(\"php://stdin\"));'"
    " exec ".!php -r 'eval(urldecode(\"echo+preg_replace_callback\\%28\\%22\\%2F\\%23\\%5C\\%7B\\%28.\\%2B\\%3F\\%29\\%5C\\%7D\\%2F\\%22\\%2C+function+\\%28\\%24matches\\%29+\\%7B+return+\\%22\\%5C\\%22+\\%2B+\\%7B\\%24matches\\%5B1\\%5D\\%7D+\\%2B+\\%5C\\%22\\%22\\%3B+\\%7D\\%2C+file_get_contents\\%28\\%22php\\%3A\\%2F\\%2Fstdin\\%22\\%29\\%29\\%3B\\%0A\"));'"
 endfunction
@@ -256,7 +264,7 @@ com! QuoteSwap  call s:SwapQuotes()
 
 " "This is a #{test}"
 command! -bar RefactorIndexOf :call <SID>RefactorIndexOf()
-command! -bar Interpolate :call <SID>interpolate()
+command! -range -bar Interpolate :call <SID>interpolate()
 command! -bar PhpLint :call <SID>PhpLint()
 command! -bar GlobalDocument :call <SID>GlobalDocument()
 command! -bar GlobalLine :call <SID>GlobalLine()

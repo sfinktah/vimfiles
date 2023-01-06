@@ -220,4 +220,68 @@ snippet / and / "and" rA
  && 
 endsnippet
 
+<<<<<<< HEAD
 
+=======
+snippet pr "printf"
+printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+snippet cl "class"
+class ${1:`!p snip.rv = ''.join(x for x in snip.basename.title() if x.isalnum()) or "UNTITLED"`} {
+public:
+	$1($1 const &) = delete;
+	$1 & operator= ($1 const &) = delete;
+
+	$1($1 &&) = default;
+	$1 & operator= ($1 &&) = default;
+
+	$1();
+	~$1();
+
+private:
+${0}
+}; // class $1
+endsnippet
+
+snippet iface "interface"
+class ${1:`!p snip.rv = ''.join(x for x in snip.basename.title() if x.isalnum()) or "UNTITLED"`} {
+public:
+	virtual ~$1() = default;
+${0}
+}; // class $1
+endsnippet
+
+snippet st "struct"
+struct ${1:`!p snip.rv = ''.join(x for x in snip.basename.title() if x.isalnum()) or "UNTITLED"`} {
+	${0:// data}
+}; // struct $1
+endsnippet
+
+snippet en "enum class"
+enum class ${1:name} : ${2:int} {
+	${3:kInvalid} = 0,${0}
+	kCount
+}; // enum class $1
+endsnippet
+snippet for "For Loop"
+for (auto ${2:i} = 0; $2 < ${1:kCount}; ${3:++}$2) {
+	${VISUAL}${0}
+}
+endsnippet
+snippet forr "Custom For Loop"
+for (auto ${1:i} = ${2:0}; ${3:$1 < 10}; ${4:++}$1) {
+	${VISUAL}${0}
+}
+endsnippet
+snippet fore "For Each"
+for (${1:auto} ${2:i} : ${3:list}) {
+	${VISUAL}${0}
+}
+endsnippet
+snippet iter "Iteration"
+for (auto ${1:i} = begin(${2:list}); $1 != end($2); ++$1) {
+	${VISUAL}${0}
+}
+endsnippet
+>>>>>>> 579eb070e22ef8caea6a61a849ec03a6eca48fbf
